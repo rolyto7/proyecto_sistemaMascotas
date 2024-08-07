@@ -52,4 +52,12 @@ class Usuario_model extends CI_Model
         $this->db->where('id', $id);
         return $this->db->update('usuario', $data);
     }
+    public function insertarUsuario($data) {
+        // Inserta el usuario en la base de datos
+        if (isset($data['fechaActualizacion'])) {
+            unset($data['fechaActualizacion']);
+        }
+        // Inserta el usuario en la base de datos
+        $this->db->insert('usuario', $data);
+    }
 }

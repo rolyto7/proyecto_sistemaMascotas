@@ -41,6 +41,10 @@ class Welcome extends CI_Controller
 		$data['usuarios'] = $this->Usuario_model->obtenerUsuarios();
 		$this->load->view('admin', $data);
 	}
+	public function nuevoUsuario()
+	{
+		$this->load->view('nuevoUsuario');
+	}
 
 	public function empleado()
 	{
@@ -100,6 +104,45 @@ class Welcome extends CI_Controller
 		}
 	}
 
+	public function agregarProducto()
+	{
+		// Load the model
+		$this->load->model('productos_model');
+
+		// Get POST data
+		$data = array(
+			'nombre' => $this->input->post('nombre'),
+			'descripcion' => $this->input->post('descripcion'),
+			'precio' => $this->input->post('precio'),
+			'stock' => $this->input->post('stock'),
+			'categoria' => $this->input->post('categoria'),
+			'mascota' => $this->input->post('mascota'),
+			'tipo_alimento' => $this->input->post('tipo_alimento'),
+			'fechaActualizacion' => date('Y-m-d H:i:s') // Set current date and time
+		);
+
+		// Handle image upload
+		if (!empty($_FILES['imagen_url']['name'])) {
+			$config['upload_path'] = './uploads/';
+			$config['allowed_types'] = 'jpg|jpeg|png';
+			$config['max_size'] = 2048;
+
+			$this->load->library('upload', $config);
+
+			if ($this->upload->do_upload('imagen_url')) {
+				$uploadData = $this->upload->data();
+				$data['imagen_url'] = 'uploads/' . $uploadData['file_name'];
+			} else {
+				$data['imagen_url'] = null;
+			}
+		}
+
+		// Insert the product
+		$this->productos_model->agregarProducto($data);
+
+		// Redirect to adminProductos.php
+		redirect('Welcome/adminProductos');
+	}
 
 	public function editarProducto($id)
 	{
@@ -113,8 +156,17 @@ class Welcome extends CI_Controller
 
 	public function adminProductos()
 	{
-		$data['productos'] = $this->Productos_model->obtenerProductos();
+		$data['productos'] = $this->Productos_model->obtenerProducto();
 		$this->load->view('adminProductos', $data);
+	}
+	public function nuevoProducto()
+	{
+		$this->load->view('agregarProducto');
+	}
+	public function adminDetalles()
+	{
+		$data['productos'] = $this->Productos_model->obtenerProducto();
+		$this->load->view('adminDetalles', $data);
 	}
 
 	public function editarProduct()
@@ -135,6 +187,38 @@ class Welcome extends CI_Controller
 			show_error('No se pudo actualizar el producto.');
 		}
 	}
+	public function guardarUsuario()
+	{
+		$this->load->model('Usuario_model'); // Cargar el modelo adecuado
+
+		$data = array(
+			'nombre' => $this->input->post('nombre'),
+			'primerApellido' => $this->input->post('primerApellido'),
+			'segundoApellido' => $this->input->post('segundoApellido'),
+			'fechaNacimiento' => $this->input->post('fechaNacimiento'),
+			'direccion' => $this->input->post('direccion'),
+			'telefono' => $this->input->post('telefono'),
+			'email' => $this->input->post('email'),
+			'nombre_usuario' => $this->input->post('nombre_usuario'),
+			'contrasena' => password_hash($this->input->post('contrasena'), PASSWORD_DEFAULT),
+			
+			// No incluimos 'fechaActualizacion' aquí
+		);
+
+		// Verificar que todos los campos obligatorios están presentes
+		if (empty($data['nombre']) || empty($data['primerApellido']) || empty($data['nombre_usuario']) || empty($data['contrasena'])) {
+			// Manejar el error aquí
+			$this->session->set_flashdata('error', 'Todos los campos obligatorios deben ser completados.');
+			redirect('Welcome/nuevoUsuario'); // Redirigir al formulario
+		} else {
+			$this->Usuario_model->insertarUsuario($data);
+
+			// Redirigir a adminUsuarios después de guardar
+			redirect('Welcome/admin');
+		}
+	}
+
+
 
 	public function editar_usuario($id)
 	{
@@ -158,7 +242,8 @@ class Welcome extends CI_Controller
 			'telefono' => $this->input->post('telefono'),
 			'email' => $this->input->post('email'),
 			'nombre_usuario' => $this->input->post('nombre_usuario'),
-			'estadoUsuario' => $this->input->post('estadoUsuario')
+			'estadoUsuario' => $this->input->post('estadoUsuario'),
+			'fechaActualizacionUsuario' => date('Y-m-d H:i:s')
 		);
 
 		if ($this->Usuario_model->update_usuario($id, $data)) {

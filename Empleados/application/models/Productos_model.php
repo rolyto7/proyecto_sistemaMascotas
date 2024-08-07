@@ -20,13 +20,16 @@ class Productos_model extends CI_Model
         $query = $this->db->get('productos'); // Suponiendo que 'productos' es tu tabla
         return $query->result(); // Devuelve un array de objetos
     }
-
-
+    public function obtenerProducto()
+    {
+        $query = $this->db->get('productos');
+        return $query->result_array(); // Asegúrate de usar result_array()
+    }
 
     // Agregar un nuevo producto
     public function agregarProducto($data)
     {
-        return $this->db->insert('productos', $data);
+        $this->db->insert('productos', $data);
     }
 
     // Obtener un producto por su ID

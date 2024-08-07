@@ -59,7 +59,7 @@
                     <a href="<?php echo site_url('Welcome/adminProductos'); ?>" class="nav-item nav-link">Productos</a>
                     <a href="<?php echo site_url('Welcome/adminDetalles'); ?>" class="nav-item nav-link">Detalles</a>
                 </div>
-                <a href="<?php echo site_url('login/login'); ?>" class="btn btn-lg btn-primary px-3 d-none d-lg-block">Cerrar Sesion</a>
+                <a href="<?php echo site_url('Welcome/login'); ?>" class="btn btn-lg btn-primary px-3 d-none d-lg-block">Cerrar Sesion</a>
             </div>
         </nav>
     </div>
@@ -69,6 +69,7 @@
     <!-- Blog Start -->
     <div class="container pt-5">
         <h4 class="text-secondary mb-3">Pet Productos</h4>
+        <a href="<?php echo site_url('Welcome/nuevoProducto'); ?>" class="btn btn-primary mb-3">Agregar Producto</a>
         <table class="table table-bordered">
             <thead>
                 <tr>

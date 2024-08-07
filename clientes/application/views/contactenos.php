@@ -15,8 +15,6 @@
             <li class="active"><a href="<?= site_url('Welcome/index') ?>">Inicio</a></li>
             <li><a href="<?= site_url('Welcome/productos') ?>">Tienda</a></li>
             <li><a href="<?= site_url('Welcome/contacto') ?>">Acerca de</a></li>
-            <li><a href="<?= site_url('Welcome/contacto') ?>">Blog</a></li>
-            <li><a href="<?= site_url('Welcome/contacto') ?>">PetGuide</a></li>
             <li><a href="<?= site_url('Welcome/contacto') ?>">Contacto</a></li>
         </ul>
     </div>

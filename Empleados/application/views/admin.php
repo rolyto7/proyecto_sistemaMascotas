@@ -69,6 +69,7 @@
     <!-- Blog Start -->
     <div class="container pt-5">
         <h4 class="text-secondary mb-3">Pet Usuarios</h4>
+        <a href="<?php echo site_url('Welcome/guardarUsuario'); ?>" class="btn btn-primary mb-3">Agregar Usuario</a>
         <table class="table table-bordered">
             <thead>
                 <tr>
