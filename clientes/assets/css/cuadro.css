@@ -1,0 +1,56 @@
+/* General Styles for Sidebar */
+#sidebar {
+    padding: 15px;
+    background-color: #f8f9fa; /* Light gray background for the sidebar */
+    border: 1px solid #ddd; /* Light gray border */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/* Section Styling */
+.section {
+    margin-bottom: 15px;
+}
+
+/* Aside Styling */
+.aside {
+    padding: 10px;
+}
+
+/* Unordered List Styling */
+ul {
+    list-style: none; /* Remove bullet points */
+    padding: 0;
+    margin: 0;
+}
+
+/* List Item Styling */
+li {
+    margin-bottom: 10px; /* Space between list items */
+    border-bottom: 1px solid #ddd; /* Separator line */
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: space-between; /* Space between links and "more" */
+    align-items: center; /* Center align items vertically */
+}
+
+/* Link Styling */
+a {
+    text-decoration: none;
+    color: #007bff; /* Bootstrap primary color */
+    font-weight: bold; /* Bold text */
+}
+
+a:hover {
+    text-decoration: underline; /* Underline on hover */
+}
+
+/* "More" Link Styling */
+.more {
+    color: #6c757d; /* Gray color */
+    font-size: 0.875rem; /* Slightly smaller font size */
+}
+
+.more:hover {
+    color: #007bff; /* Change color on hover to match link color */
+}
