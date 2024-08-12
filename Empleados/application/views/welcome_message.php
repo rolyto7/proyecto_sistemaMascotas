@@ -13,29 +13,77 @@
 		}
 
 		.user-info .user-name {
-			margin-left: 200px;
+			margin-left: 10px;
+			/* Reduce el margen entre el nombre de usuario y el logo */
 		}
 
 		.user-info img {
-			margin-left: 10px;
+			margin-left: 5px;
+			/* Reduce el margen entre el nombre y la imagen */
 			width: 40px;
 			height: 40px;
 		}
+
+		.navigation {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			padding: 0;
+			list-style: none;
+		}
+
+		.navigation li {
+			margin: 0 0px;
+			/* Reduce el margen entre los elementos de navegación */
+		}
+
+		.featured ul {
+			list-style: none;
+			padding: 0;
+			display: flex;
+			justify-content: center;
+			align-items: flex-start;
+		}
+
+		.featured li {
+			text-align: center;
+			width: 400px;
+			height: 200px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.featured img {
+			max-width: 100%;
+			height: auto;
+		}
+
+		.container {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			margin-top: 20px;
+		}
 	</style>
+
 </head>
 
 <body>
 	<div id="header">
-		<a href="#" id="logo"><img src="<?= base_url() ?>assets/images/logo.gif" alt=""></a>
+		<a href="<?= site_url('Welcome/empleado') ?>" id="logo"><img src="<?= base_url() ?>assets/images/logo.gif" alt=""></a>
 		<ul class="navigation">
 			<li class="active"><a href="<?= site_url('Welcome/productos') ?>">Productos</a></li>
 			<li><a href="<?= site_url('Welcome/productos') ?>">Pedidos</a></li>
 			<li><a href="<?= site_url('Welcome/contacto') ?>">Detalles</a></li>
 			<li><a href="<?= site_url('Welcome/contacto') ?>">Carrito</a></li>
+			<li><a href="<?= site_url('Welcome/miCuenta') ?>">Mi cuenta</a></li>
 			<?php if (isset($nombre)) : ?>
 				<li class="user-info">
 					<span class="user-name">Empleado <?= $nombre; ?></span>
-					<img src="<?= base_url() ?>assets/images/empleado.png" width="20" height="20" alt="User Icon">
+					<img src="<?= base_url() ?>assets/images/empleado.png" alt="User Icon">
+					<a href="<?= site_url('Welcome/editarUsuario') ?>"><img src="<?= base_url() ?>assets/images/settings.png" alt="Settings Icon" class="settings-icon"></a>
 				</li>
 			<?php endif; ?>
 		</ul>

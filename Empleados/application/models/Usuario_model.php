@@ -9,11 +9,17 @@ class Usuario_model extends CI_Model
         $this->load->database();
     }
     // Obtener usuario por ID
-    public function get_usuario($id)
+    public function get_usuarios($id)
     {
         $query = $this->db->get_where('usuario', array('id' => $id));
         return $query->row_array();
     }
+    public function get_usuario($id)
+{
+    $query = $this->db->get_where('usuario', array('id' => $id));
+    return $query->row(); // Asegúrate de que devuelve un objeto
+}
+
     public function validarusuario($user, $password)
     {
         $this->db->where('email', $user);
@@ -33,6 +39,7 @@ class Usuario_model extends CI_Model
         $this->db->where('id', $id);
         return $this->db->update('usuario', $data);
     }
+    
     // Obtener todos los usuarios
     public function obtenerUsuarios()
     {
@@ -40,19 +47,32 @@ class Usuario_model extends CI_Model
         return $query->result_array(); // Retorna el resultado como un array de arrays
     }
 
-    // Obtener un usuario por su ID
-    public function obtenerUsuarioPorId($id)
+    public function obtenerUsuarioPorId($usuario_id)
     {
-        $query = $this->db->get_where('usuario', array('id' => $id));
-        return $query->row_array(); // Retorna el resultado como un array
+        $this->db->where('id', $usuario_id); // Asegúrate de que 'id' es el nombre correcto
+        $query = $this->db->get('usuario'); // Asegúrate de que 'usuario' es el nombre correcto de la tabla
+        return $query->row(); // Debería devolver un objeto con los datos del usuario
     }
+    
+    
+
+
+
+    public function actualizarUsuario($id, $data)
+    {
+        $this->db->where('id', $id);
+        return $this->db->update('Usuario', $data);
+    }
+
+
     public function delete_usuario($id)
     {
         $data = array('estadoUsuario' => 0); // Cambiar el estado a 0
         $this->db->where('id', $id);
         return $this->db->update('usuario', $data);
     }
-    public function insertarUsuario($data) {
+    public function insertarUsuario($data)
+    {
         // Inserta el usuario en la base de datos
         if (isset($data['fechaActualizacion'])) {
             unset($data['fechaActualizacion']);
