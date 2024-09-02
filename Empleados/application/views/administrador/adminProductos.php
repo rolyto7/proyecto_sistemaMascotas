@@ -1,4 +1,4 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -31,14 +31,12 @@
 <body>
     <!-- Topbar Start -->
     <div class="container-fluid">
-
         <div class="row py-3 px-lg-5">
             <div class="col-lg-4">
                 <a href="" class="navbar-brand d-none d-lg-block">
                     <h1 class="m-0 display-5 text-capitalize"><span class="text-primary">Pet</span>Shop</h1>
                 </a>
             </div>
-
         </div>
     </div>
     <!-- Topbar End -->
@@ -57,9 +55,9 @@
                 <div class="navbar-nav mr-auto py-0">
                     <a href="<?php echo site_url('Welcome/admin'); ?>" class="nav-item nav-link">Usuarios</a>
                     <a href="<?php echo site_url('Welcome/adminProductos'); ?>" class="nav-item nav-link">Productos</a>
-                    <a href="<?php echo site_url('Welcome/adminDetalles'); ?>" class="nav-item nav-link">Detalles</a>
+                    <a href="<?php echo site_url('Welcome/adminDetalles'); ?>" class="nav-item nav-link">Ventas</a>
                 </div>
-                <a href="<?php echo site_url('login/login'); ?>" class="btn btn-lg btn-primary px-3 d-none d-lg-block">Cerrar Sesion</a>
+                <a href="<?php echo site_url('Welcome/cerrarsesion'); ?>" class="btn btn-lg btn-primary px-3 d-none d-lg-block">Cerrar Sesion</a>
             </div>
         </nav>
     </div>
@@ -67,11 +65,55 @@
 
 
     <!-- Blog Start -->
-    
-        
+    <div class="container pt-5">
+        <h4 class="text-secondary mb-3">Pet Productos</h4>
+        <a href="<?php echo site_url('Welcome/nuevoProducto'); ?>" class="btn btn-primary mb-3">Agregar Producto</a>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Precio</th>
+                    <th>Stock</th>
+                    <th>Categoría</th>
+                    <th>Imagen</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if (!empty($productos)) : ?>
+                    <?php foreach ($productos as $producto) : ?>
+                        <tr>
+                            <td><?php echo $producto['producto_id']; ?></td>
+                            <td><?php echo $producto['nombre']; ?></td>
+                            <td><?php echo $producto['descripcion']; ?></td>
+                            <td><?php echo $producto['precio']; ?>Bs.</td>
+                            <td><?php echo $producto['stock']; ?></td>
+                            <td><?php echo $producto['categoria']; ?></td>
+                            <td>
+                                <?php if ($producto['imagen_url']) : ?>
+                                    <img src="<?php echo $producto['imagen_url']; ?>" alt="Imagen del Producto" style="width: 100px; height: 100px;">
+                                    <?php else : ?>
+                                    No disponible
+                                <?php endif; ?>
+                            </td>
+                            <td>
+                                <a href="<?php echo site_url('Welcome/editarProducto/' . $producto['producto_id']); ?>" class="btn btn-warning">Editar</a>
+                                <a href="<?php echo site_url('Welcome/eliminarProducto/' . $producto['producto_id']); ?>" class="btn btn-danger" onclick="return confirm('¿Estás seguro de que quieres eliminar este producto?');">Eliminar</a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php else : ?>
+                    <tr>
+                        <td colspan="8">No hay productos disponibles.</td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+
         <!-- Back to Top -->
         <a href="#" class="btn btn-lg btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
-
 
         <!-- JavaScript Libraries -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

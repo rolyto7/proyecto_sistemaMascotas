@@ -3,10 +3,8 @@
 
 <head>
     <meta charset="utf-8">
-    <title>PetLover - Pet Care Website Template</title>
+    <title>Crear Nuevo Usuario</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="Free HTML Templates" name="keywords">
-    <meta content="Free HTML Templates" name="description">
 
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
@@ -20,10 +18,6 @@
     <!-- Flaticon Font -->
     <link href="lib/flaticon/font/flaticon.css" rel="stylesheet">
 
-    <!-- Libraries Stylesheet -->
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
-
     <!-- Customized Bootstrap Stylesheet -->
     <link href="<?php echo base_url(); ?>assets/css/style1.css" rel="stylesheet">
 </head>
@@ -31,18 +25,15 @@
 <body>
     <!-- Topbar Start -->
     <div class="container-fluid">
-
         <div class="row py-3 px-lg-5">
             <div class="col-lg-4">
                 <a href="" class="navbar-brand d-none d-lg-block">
                     <h1 class="m-0 display-5 text-capitalize"><span class="text-primary">Pet</span>Shop</h1>
                 </a>
             </div>
-
         </div>
     </div>
     <!-- Topbar End -->
-
 
     <!-- Navbar Start -->
     <div class="container-fluid p-0">
@@ -55,51 +46,53 @@
             </button>
             <div class="collapse navbar-collapse justify-content-between px-3" id="navbarCollapse">
                 <div class="navbar-nav mr-auto py-0">
-                    <a href="<?php echo site_url('login/admin'); ?>" class="nav-item nav-link">Usuarios</a>
-                    <a href="<?php echo site_url('login/adminProductos'); ?>" class="nav-item nav-link">Productos</a>
-                    <a href="<?php echo site_url('login/adminDetalles'); ?>" class="nav-item nav-link">Detalles</a>
+                    <a href="<?php echo site_url('Welcome/admin'); ?>" class="nav-item nav-link">Usuarios</a>
+                    <a href="<?php echo site_url('Welcome/adminProductos'); ?>" class="nav-item nav-link">Productos</a>
+                    <a href="<?php echo site_url('Welcome/adminDetalles'); ?>" class="nav-item nav-link">Detalles</a>
                 </div>
+                <a href="<?php echo site_url('Welcome/cerrarsesion'); ?>" class="btn btn-lg btn-primary px-3 d-none d-lg-block">Cerrar Sesion</a>
             </div>
         </nav>
     </div>
     <!-- Navbar End -->
 
-
-    <!-- Blog Start -->
+    <!-- Form Start -->
     <div class="container pt-5">
-        <h4 class="text-secondary mb-3">Pet Detalles</h4>
-        <?php echo form_open('Welcome/editarProduct'); ?>
-        <input type="hidden" name="producto_id" value="<?php echo $producto['producto_id']; ?>">
-        <div class="form-group">
-            <label for="nombre">Nombre:</label>
-            <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo set_value('nombre', $producto['nombre']); ?>" required>
-        </div>
-        <div class="form-group">
-            <label for="descripcion">Descripción:</label>
-            <textarea class="form-control" id="descripcion" name="descripcion"><?php echo set_value('descripcion', $producto['descripcion']); ?></textarea>
-        </div>
-        <div class="form-group">
-            <label for="precio">Precio:</label>
-            <input type="number" class="form-control" id="precio" name="precio" value="<?php echo set_value('precio', $producto['precio']); ?>" step="0.01" required>
-        </div>
-        <div class="form-group">
-            <label for="stock">Stock:</label>
-            <input type="number" class="form-control" id="stock" name="stock" value="<?php echo set_value('stock', $producto['stock']); ?>" required>
-        </div>
-        <div class="form-group">
-            <label for="categoria">Categoría:</label>
-            <input type="text" class="form-control" id="categoria" name="categoria" value="<?php echo set_value('categoria', $producto['categoria']); ?>">
-        </div>
-        <div class="form-group">
-            <label for="imagen_url">URL de Imagen:</label>
-            <input type="text" class="form-control" id="imagen_url" name="imagen_url" value="<?php echo set_value('imagen_url', $producto['imagen_url']); ?>">
-        </div>
-        <button type="submit" class="btn btn-primary">Actualizar Producto</button>
-        <?php echo form_close(); ?>
+        <h4 class="text-secondary mb-3">Crear Nuevo Usuario</h4>
+        <form action="<?php echo site_url('Welcome/guardarUsuario'); ?>" method="post">
+            <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" required>
+            </div>
+            <div class="form-group">
+                <label for="primerApellido">Primer Apellido:</label>
+                <input type="text" class="form-control" id="primerApellido" name="primerApellido" required>
+            </div>
+            <div class="form-group">
+                <label for="segundoApellido">Segundo Apellido:</label>
+                <input type="text" class="form-control" id="segundoApellido" name="segundoApellido">
+            </div>
+            <div class="form-group">
+                <label for="direccion">Dirección:</label>
+                <input type="text" class="form-control" id="direccion" name="direccion">
+            </div>
+            <div class="form-group">
+                <label for="telefono">Teléfono:</label>
+                <input type="text" class="form-control" id="telefono" name="telefono">
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" name="email">
+            </div>
+            <div class="form-group">
+                <label for="nombre_usuario">Nombre de Usuario:</label>
+                <input type="text" class="form-control" id="nombre_usuario" name="nombre_usuario" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar Usuario</button>
+        </form>
 
     </div>
-
-
+    <!-- Form End -->
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

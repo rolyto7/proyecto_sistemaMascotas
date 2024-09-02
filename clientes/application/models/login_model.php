@@ -12,14 +12,12 @@ class Login_model extends CI_Model
         parent::__construct();
         $this->load->database(); // Asegúrate de que la base de datos esté cargada
     }
-    public function listaproductos()
+
+    public function agregarusuario1($data)
     {
-        $this->db->select('producto_id, nombre, precio, imagen_url');
-        $this->db->from('productos');
-        return $this->db->get();  // Devuelve el resultado
+        return $this->db->insert('usuarios', $data);
     }
-
-
+    
     public function agregarusuario($data)
     {
         // validar usuario y si no existe insertar, si se inserta devolver true, si no devolver false

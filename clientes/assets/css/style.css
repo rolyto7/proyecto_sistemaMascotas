@@ -19,6 +19,7 @@ body {
 #header a#logo img {
 	border:0;
 }
+
 /**-------------- Navigation style ---------------**/
   #header ul.navigation {
 	list-style-type:none;

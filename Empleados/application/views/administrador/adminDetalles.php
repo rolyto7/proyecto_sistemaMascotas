@@ -57,9 +57,9 @@
                 <div class="navbar-nav mr-auto py-0">
                     <a href="<?php echo site_url('Welcome/admin'); ?>" class="nav-item nav-link">Usuarios</a>
                     <a href="<?php echo site_url('Welcome/adminProductos'); ?>" class="nav-item nav-link">Productos</a>
-                    <a href="<?php echo site_url('Welcome/adminDetalles'); ?>" class="nav-item nav-link">Detalles</a>
+                    <a href="<?php echo site_url('Welcome/adminDetalles'); ?>" class="nav-item nav-link">Ventas</a>
                 </div>
-                <a href="<?php echo site_url('Welcome/login'); ?>" class="btn btn-lg btn-primary px-3 d-none d-lg-block">Cerrar Sesion</a>
+                <a href="<?php echo site_url('Welcome/cerrarsesion'); ?>" class="btn btn-lg btn-primary px-3 d-none d-lg-block">Cerrar Sesion</a>
             </div>
         </nav>
     </div>
@@ -67,56 +67,9 @@
 
 
     <!-- Blog Start -->
-    <div class="container pt-5">
-        <h4 class="text-secondary mb-3">Pet Usuarios</h4>
-        <a href="<?php echo site_url('Welcome/guardarUsuario'); ?>" class="btn btn-primary mb-3">Agregar Usuario</a>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Primer Apellido</th>
-                    <th>Segundo Apellido</th>
-                    <th>Fecha de Nacimiento</th>
-                    <th>Dirección</th>
-                    <th>Teléfono</th>
-                    <th>Email</th>
-                    <th>Nombre de Usuario</th>
-                    <th>Estado Usuario</th>
-                    <th>Fecha Actualización</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php if (!empty($usuarios)) : ?>
-                    <?php foreach ($usuarios as $usuario) : ?>
-                        <tr>
-                            <td><?php echo $usuario['id']; ?></td>
-                            <td><?php echo $usuario['nombre']; ?></td>
-                            <td><?php echo $usuario['primerApellido']; ?></td>
-                            <td><?php echo $usuario['segundoApellido']; ?></td>
-                            <td><?php echo $usuario['fechaNacimiento']; ?></td>
-                            <td><?php echo $usuario['direccion']; ?></td>
-                            <td><?php echo $usuario['telefono']; ?></td>
-                            <td><?php echo $usuario['email']; ?></td>
-                            <td><?php echo $usuario['nombre_usuario']; ?></td>
-                            <td><?php echo $usuario['estadoUsuario']; ?></td>
-                            <td><?php echo $usuario['fechaActualizacionUsuario']; ?></td>
-                            <td>
-                                <a href="<?php echo site_url('Welcome/editar_usuario/' . $usuario['id']); ?>" class="btn btn-warning">Editar</a>
-                                <a href="<?php echo site_url('Welcome/eliminar_usuario/' . $usuario['id']); ?>" class="btn btn-danger">Eliminar</a>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                <?php else : ?>
-                    <tr>
-                        <td colspan="13">No hay usuarios disponibles.</td>
-                    </tr>
-                <?php endif; ?>
-            </tbody>
-        </table>
-
-
+    
+        
+        <!-- Back to Top -->
         <a href="#" class="btn btn-lg btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
 
 

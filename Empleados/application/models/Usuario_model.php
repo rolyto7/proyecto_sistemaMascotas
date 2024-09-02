@@ -15,10 +15,10 @@ class Usuario_model extends CI_Model
         return $query->row_array();
     }
     public function get_usuario($id)
-{
-    $query = $this->db->get_where('usuario', array('id' => $id));
-    return $query->row(); // Asegúrate de que devuelve un objeto
-}
+    {
+        $query = $this->db->get_where('usuario', array('id' => $id));
+        return $query->row(); // Asegúrate de que devuelve un objeto
+    }
 
     public function validarusuario($user, $password)
     {
@@ -39,7 +39,7 @@ class Usuario_model extends CI_Model
         $this->db->where('id', $id);
         return $this->db->update('usuario', $data);
     }
-    
+
     // Obtener todos los usuarios
     public function obtenerUsuarios()
     {
@@ -53,8 +53,8 @@ class Usuario_model extends CI_Model
         $query = $this->db->get('usuario'); // Asegúrate de que 'usuario' es el nombre correcto de la tabla
         return $query->row(); // Debería devolver un objeto con los datos del usuario
     }
-    
-    
+
+
 
 
 

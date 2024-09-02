@@ -72,20 +72,23 @@
 
 <body>
     <div id="header">
-        <a href="<?= site_url('Welcome/empleado') ?>" id="logo"><img src="<?= base_url() ?>assets/images/logo.gif" alt=""></a>
+        <a href="<?= site_url('Welcome/empleado') ?>" id="logo"><img src="<?= base_url() ?>assets/images/logo.gif"
+                alt="Logo"></a>
         <ul class="navigation">
             <li class="active"><a href="<?= site_url('Welcome/productos') ?>">Productos</a></li>
-            <li><a href="<?= site_url('Welcome/pedidos') ?>">Pedidos</a></li>
-            <li><a href="<?= site_url('Welcome/contacto') ?>">Detalles</a></li>
+            <li><a href="<?= site_url('Welcome/ver_pedidos') ?>">Pedidos</a></li>
             <li><a href="<?= site_url('Welcome/carrito') ?>">Carrito</a></li>
-            <li><a href="<?= site_url('Welcome/miCuenta') ?>">Mi cuenta</a></li>
-            <?php if (isset($nombre)) : ?>
+            <?php if (isset($nombre)): ?>
                 <li class="user-info">
-                    <span class="user-name">Empleado <?= htmlspecialchars($nombre); ?></span>
+                    <span class="user-name">Empleado <?= $nombre; ?></span>
                     <img src="<?= base_url() ?>assets/images/empleado.png" alt="User Icon">
-                    <a href="<?= site_url('Welcome/editarUsuario') ?>"><img src="<?= base_url() ?>assets/images/settings.png" alt="Settings Icon" class="settings-icon"></a>
                 </li>
             <?php endif; ?>
+            <li>
+                <a href="<?php echo site_url('Welcome/cerrarsesion'); ?>" title="Cerrar Sesión" class="btn-exit-system">
+                    <img src="<?= base_url() ?>assets/images/apagar.png" alt="Cerrar sesión" class="logout-img">
+                </a>
+            </li>
         </ul>
     </div>
 
@@ -104,15 +107,20 @@
             <label>Nombre:</label>
             <input type="text" name="nombre" value="<?php echo set_value('nombre', $usuario->nombre); ?>" required><br>
             <label>Primer Apellido:</label>
-            <input type="text" name="primerApellido" value="<?php echo set_value('primerApellido', $usuario->primerApellido); ?>" required><br>
+            <input type="text" name="primerApellido"
+                value="<?php echo set_value('primerApellido', $usuario->primerApellido); ?>" required><br>
             <label>Segundo Apellido:</label>
-            <input type="text" name="segundoApellido" value="<?php echo set_value('segundoApellido', $usuario->segundoApellido); ?>" required><br>
+            <input type="text" name="segundoApellido"
+                value="<?php echo set_value('segundoApellido', $usuario->segundoApellido); ?>" required><br>
             <label>Nombre de Usuario:</label>
-            <input type="text" name="nombre_usuario" value="<?php echo set_value('nombre_usuario', $usuario->nombre_usuario); ?>" required><br>
+            <input type="text" name="nombre_usuario"
+                value="<?php echo set_value('nombre_usuario', $usuario->nombre_usuario); ?>" required><br>
             <label>Teléfono:</label>
-            <input type="number" name="telefono" value="<?php echo set_value('telefono', $usuario->telefono); ?>" required><br>
+            <input type="number" name="telefono" value="<?php echo set_value('telefono', $usuario->telefono); ?>"
+                required><br>
             <label>Dirección:</label>
-            <input type="text" name="direccion" value="<?php echo set_value('direccion', $usuario->direccion); ?>" required><br>
+            <input type="text" name="direccion" value="<?php echo set_value('direccion', $usuario->direccion); ?>"
+                required><br>
             <label>Contraseña Actual:</label>
             <input type="password" name="contrasena_actual" required><br>
 

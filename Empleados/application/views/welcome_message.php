@@ -33,7 +33,8 @@
 		}
 
 		.navigation li {
-			margin: 0 0px;
+			margin: 0 5px;
+			/* Reducido para acercar los elementos */
 			/* Reduce el margen entre los elementos de navegación */
 		}
 
@@ -66,28 +67,43 @@
 			align-items: center;
 			margin-top: 20px;
 		}
+
+		.logout-icon {
+			color: #ffffff;
+			font-size: 24px;
+			margin-left: 2px;
+
+		}
+
+
+
+		.logout-img {
+			width: 30px;
+			height: 25px;
+		}
 	</style>
 
 </head>
 
 <body>
 	<div id="header">
-		<a href="<?= site_url('Welcome/empleado') ?>" id="logo"><img src="<?= base_url() ?>assets/images/logo.gif" alt=""></a>
+		<a href="<?= site_url('Welcome/empleado') ?>" id="logo"><img src="<?= base_url() ?>assets/images/logo.gif" alt="Logo"></a>
 		<ul class="navigation">
 			<li class="active"><a href="<?= site_url('Welcome/productos') ?>">Productos</a></li>
-			<li><a href="<?= site_url('Welcome/productos') ?>">Pedidos</a></li>
-			<li><a href="<?= site_url('Welcome/contacto') ?>">Detalles</a></li>
-			<li><a href="<?= site_url('Welcome/contacto') ?>">Carrito</a></li>
-			<li><a href="<?= site_url('Welcome/miCuenta') ?>">Mi cuenta</a></li>
+			<li><a href="<?= site_url('Welcome/ver_pedidos') ?>">Pedidos</a></li>
+			<li><a href="<?= site_url('Welcome/carrito') ?>">Carrito</a></li>
 			<?php if (isset($nombre)) : ?>
 				<li class="user-info">
 					<span class="user-name">Empleado <?= $nombre; ?></span>
 					<img src="<?= base_url() ?>assets/images/empleado.png" alt="User Icon">
-					<a href="<?= site_url('Welcome/editarUsuario') ?>"><img src="<?= base_url() ?>assets/images/settings.png" alt="Settings Icon" class="settings-icon"></a>
 				</li>
 			<?php endif; ?>
+			<li>
+				<a href="<?php echo site_url('Welcome/cerrarsesion'); ?>" title="Cerrar Sesión" class="btn-exit-system">
+					<img src="<?= base_url() ?>assets/images/apagar.png" alt="Cerrar sesión" class="logout-img">
+				</a>
+			</li>
 		</ul>
-	</div>
 	</div>
 
 	<div id="body">

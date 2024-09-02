@@ -15,7 +15,15 @@ class Login_model extends CI_Model
         $this->db->insert('usuario', $data);
         return $this->db->affected_rows() > 0;
     }
-	
+
+    public function obtenerUsuarioPorId($usuario_id)
+    {
+        $this->db->where('id', $usuario_id); // Asegúrate de que 'id' es el nombre correcto
+        $query = $this->db->get('usuario'); // Asegúrate de que 'usuario' es el nombre correcto de la tabla
+        return $query->row(); // Debería devolver un objeto con los datos del usuario
+    }
+    
+
 
     public function validarusuario($user, $password)
     {

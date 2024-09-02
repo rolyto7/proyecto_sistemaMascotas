@@ -53,7 +53,7 @@
                     <a href="<?php echo site_url('Welcome/adminProductos'); ?>" class="nav-item nav-link">Productos</a>
                     <a href="<?php echo site_url('Welcome/adminDetalles'); ?>" class="nav-item nav-link">Detalles</a>
                 </div>
-                <a href="<?php echo site_url('Welcome/login'); ?>" class="btn btn-lg btn-primary px-3 d-none d-lg-block">Cerrar Sesion</a>
+                <a href="<?php echo site_url('Welcome/cerrarsesion'); ?>" class="btn btn-lg btn-primary px-3 d-none d-lg-block">Cerrar Sesion</a>
             </div>
         </nav>
     </div>
@@ -81,19 +81,37 @@
                 </div>
                 <div class="form-group">
                     <label for="categoria">Categoría</label>
-                    <input type="text" class="form-control" id="categoria" name="categoria">
+                    <select class="form-control" id="categoria" name="categoria">
+                        <option value="Accesorios">Accesorios</option>
+                        <option value="Alimento">Alimentos</option>
+                        <option value="Juguetes">Juguetes</option>
+                        <option value="Estetica E Higiene">Estetica E Higiene</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="mascota">Mascota</label>
-                    <input type="text" class="form-control" id="mascota" name="mascota">
+                    <select class="form-control" id="mascota" name="mascota">
+                        <option value="perro">Perro</option>
+                        <option value="gato">Gato</option>
+                    </select>
                 </div>
                 <div class="form-group">
-                    <label for="tipo_alimento">Tipo de Alimento</label>
-                    <input type="text" class="form-control" id="tipo_alimento" name="tipo_alimento">
+                    <label for="tipo_alimento">Tipo</label>
+                    <select class="form-control" id="tipo" name="tipo">
+                        <option value="Alimento Seco">Alimento Seco</option>
+                        <option value="Alimento Humedo">Alimento Humedo</option>
+                        <option value="Mascador">Mascador</option>
+                        <option value="Higiene Dental">Higiene Dental</option>
+                        <option value="Torres y Rascadores">Torres y Rascadores</option>
+                        <option value="Juguete">Juguete</option>
+                        <option value="Platos y Dispensadores">Platos y Dispensadores</option>
+                        <option value="Ropa">Ropa</option>
+                        <option value="Transportes y Jaulas">Transportes y Jaulas</option>
+                    </select>
                 </div>
                 <div class="form-group">
-                    <label for="imagen_url">Imagen</label>
-                    <input type="file" class="form-control-file" id="imagen_url" name="imagen_url">
+                    <label for="categoria">Url de Imagen</label>
+                    <input type="text" class="form-control" id="imagen_url" name="imagen_url">
                 </div>
                 <button type="submit" class="btn btn-primary">Agregar Producto</button>
             </form>

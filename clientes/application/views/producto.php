@@ -6,6 +6,7 @@
     <meta charset="iso-8859-1">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/style.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/cuadro.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         .featured ul {
             list-style: none;
@@ -53,10 +54,10 @@
 
 <body>
     <div id="header">
-        <a href="#" id="logo"><img src="<?= base_url() ?>assets/images/logo.gif" width="310" height="114" alt=""></a>
+        <a href="<?= site_url('Welcome/index') ?>" id="logo"><img src="<?= base_url() ?>assets/images/logo.gif" width="310" height="114" alt=""></a>
         <ul class="navigation">
-            <li class="active"><a href="<?= site_url('Welcome/index') ?>">Inicio</a></li>
-            <li><a href="<?= site_url('Welcome/productos') ?>">Tienda</a></li>
+            <li class="active"><a href="<?= site_url('Welcome/productos') ?>">Tienda</a></li>
+            <li><a href="<?= site_url('Welcome/carrito') ?>">Carrito <i class="fas fa-shopping-cart"></i></a></li>
             <li><a href="<?= site_url('Welcome/contacto') ?>">Acerca de</a></li>
             <li><a href="<?= site_url('Welcome/contacto') ?>">Contacto</a></li>
         </ul>
@@ -72,7 +73,7 @@
             <h1 style="text-align: center;">Explora nuestras ofertas</h1>
             <ul>
                 <li><a href="<?= site_url('Welcome/productos') ?>"><img src="<?= base_url() ?>assets/images/novedades.png" alt="Novedades"></a></li>
-                <li><a href="<?= site_url('Welcome/productos') ?>"><img src="<?= base_url() ?>assets/images/ofertas.png" alt="Ofertas"></a></li>
+                <li><a href="<?= site_url('Welcome/ofertas') ?>"><img src="<?= base_url() ?>assets/images/ofertas.png" alt="Ofertas"></a></li>
             </ul>
         </div>
     </div>
