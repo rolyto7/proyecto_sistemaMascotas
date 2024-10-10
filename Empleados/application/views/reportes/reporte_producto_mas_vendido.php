@@ -202,22 +202,7 @@
                     <th>Fecha de Entrega</th>
                 </tr>
             </thead>
-            <tbody>
-                <?php if (!empty($productos)): ?>
-                    <?php foreach ($productos as $producto): ?>
-                        <tr>
-                            <td><?php echo htmlspecialchars($producto['nombre']); ?></td>
-                            <td><?php echo $producto['total_vendida']; ?></td>
-                            <td><?php echo htmlspecialchars(date('Y-m-d', strtotime($producto['fechaVenta']))); ?></td>
-                            <!-- Formatear la fecha -->
-                        </tr>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <tr>
-                        <td colspan="3" class="text-center">No hay productos vendidos en el rango seleccionado.</td>
-                    </tr>
-                <?php endif; ?>
-            </tbody>
+
         </table>
 
 
