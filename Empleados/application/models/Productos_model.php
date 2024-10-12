@@ -30,6 +30,13 @@ class Productos_model extends CI_Model
         $query = $this->db->get('productos');
         return $query->result();
     }
+    public function get_categorias_unicas()
+    {
+        $this->db->distinct();
+        $this->db->select('categoria');
+        $query = $this->db->get('productos');
+        return $query->result();
+    }
     public function obtener_productos()
     {
         $query = $this->db->get('productos');
@@ -164,5 +171,43 @@ class Productos_model extends CI_Model
         $this->db->set('stock', 'stock - ' . (int) $cantidad, FALSE);
         $this->db->where('producto_id', $producto_id);
         $this->db->update('productos');
+    }
+    public function descontar_stock($producto_id, $cantidad)
+    {
+        // Obtener el stock actual del producto
+        $this->db->set('stock', 'stock - ' . intval($cantidad), FALSE);
+        $this->db->where('producto_id', $producto_id);
+        $this->db->update('productos');
+    }
+    public function get_all_categoria()
+    {
+        $this->db->distinct();
+        $this->db->select('categoria');
+        $this->db->from('productos');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function get_all_nombres()
+    {
+        $this->db->select('producto_id, nombre');
+        $this->db->from('productos');
+        $query = $this->db->get();
+        return $query->result();
+    }
+    public function sumar_stock($producto_id, $cantidad)
+    {
+        $this->db->set('stock', 'stock + ' . (int) $cantidad, FALSE); // Sumar al stock existente
+        $this->db->where('producto_id', $producto_id);
+        return $this->db->update('productos'); // Cambia 'productos' por el nombre correcto de tu tabla
+    }
+    public function obtener_producto($producto_id)
+    {
+        return $this->db->get_where('productos', ['producto_id' => $producto_id])->row();
+    }
+    public function actualiza_stock($producto_id, $nuevo_stock)
+    {
+        $this->db->where('producto_id', $producto_id);
+        return $this->db->update('productos', ['stock' => $nuevo_stock]);
     }
 }

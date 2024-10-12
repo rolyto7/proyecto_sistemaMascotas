@@ -10,7 +10,8 @@
     <link href="img/favicon.ico" rel="icon">
 
     <!-- Google Web Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Nunito:wght@600;700;800&display=swap"
+        rel="stylesheet">
 
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -20,6 +21,29 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="<?php echo base_url(); ?>assets/css/style1.css" rel="stylesheet">
+    <style>
+        .custom-select-reportitos {
+            background-color: transparent;
+            color: white;
+            border: none;
+            text-align: center;
+            text-align-last: center;
+            font-size: 20px;
+            height: 100%;
+            appearance: none;
+            margin-top: 10px;
+        }
+
+        .custom-select-reportitos option {
+            background-color: black;
+            color: white;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+        }
+    </style>
 </head>
 
 <body>
@@ -39,7 +63,8 @@
     <div class="container-fluid p-0">
         <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3 py-lg-0 px-lg-5">
             <a href="" class="navbar-brand d-block d-lg-none">
-                <h1 class="m-0 display-5 text-capitalize font-italic text-white"><span class="text-primary">Safety</span>First</h1>
+                <h1 class="m-0 display-5 text-capitalize font-italic text-white"><span
+                        class="text-primary">Safety</span>First</h1>
             </a>
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                 <span class="navbar-toggler-icon"></span>
@@ -48,9 +73,21 @@
                 <div class="navbar-nav mr-auto py-0">
                     <a href="<?php echo site_url('Welcome/admin'); ?>" class="nav-item nav-link">Usuarios</a>
                     <a href="<?php echo site_url('Welcome/adminProductos'); ?>" class="nav-item nav-link">Productos</a>
-                    <a href="<?php echo site_url('Welcome/adminDetalles'); ?>" class="nav-item nav-link">Detalles</a>
+                    <a href="<?php echo site_url('Welcome/adminDetalles'); ?>" class="nav-item nav-link">Ventas</a>
+                    <div class="nav-item">
+                        <select class="custom-select-reportitos" onchange="location = this.value;">
+                            <option value="" disabled selected>Reportes</option>
+                            <option value="<?php echo site_url('Welcome/reporte_usuario'); ?>">Reportes de
+                                Usuario</option>
+                            <option value="<?php echo site_url('Welcome/reporte_por_producto_categoria'); ?>">Reporte
+                                por Producto y Categoria</option>
+                            <option value="<?php echo site_url('Welcome/reporte_producto_mas_vendido'); ?>">Producto Más
+                                Vendido y Categoría</option>
+                        </select>
+                    </div>
                 </div>
-                <a href="<?php echo site_url('Welcome/cerrarsesion'); ?>" class="btn btn-lg btn-primary px-3 d-none d-lg-block">Cerrar Sesion</a>
+                <a href="<?php echo site_url('Welcome/cerrarsesion'); ?>"
+                    class="btn btn-lg btn-primary px-3 d-none d-lg-block">Cerrar Sesion</a>
             </div>
         </nav>
     </div>

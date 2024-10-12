@@ -218,6 +218,11 @@
         </ul>
     </div>
     <div class="container">
+        <?php if ($this->session->flashdata('pedido_entregado')): ?>
+            <script>
+                alert('<?php echo $this->session->flashdata('pedido_entregado'); ?>');
+            </script>
+        <?php endif; ?>
         <form method="GET" action="<?= site_url('Welcome/ver_pedidos') ?>" class="pedido">
             <h1>Lista de Pedidos</h1>
             <div class="form-group">

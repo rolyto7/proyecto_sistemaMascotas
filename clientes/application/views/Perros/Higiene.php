@@ -153,12 +153,23 @@
                                 }
                                 ?>
                                 <hr>
-                                <p class="card-text">Bs. <?php echo $row->precio; ?></p>
-                                <a href="javascript:void(0);" onclick="agregarAlCarrito(<?php echo $row->producto_id; ?>, 1)"
-                                    class="btn btn-primary btn-icon" title="Agregar <?php echo $row->nombre; ?> al carrito">
-                                    Agregar al Carrito
-                                    <i class="bi bi-cart-plus"></i>
-                                </a>
+                                <?php if ($row->oferta > 0): ?>
+                                    <p class="card-text">
+                                        <span class="original-price">Bs. <?php echo number_format($row->precio, 2); ?></span> <br>
+                                        <span class="discount">Bs. <?php echo number_format($precioConDescuento, 2); ?>
+                                            (<?php echo $descuento * 100; ?>% OFF)</span>
+                                    </p>
+                                    <p class="card-text">Stock: <?php echo $row->stock; ?> unidades</p>
+                                <?php else: ?>
+                                    <p class="card-text">Bs. <?php echo number_format($row->precio, 2); ?></p>
+                                    <p class="card-text">Stock: <?php echo $row->stock; ?> unidades</p>
+                                <?php endif; ?>
+                                <?php if ($row->stock > 0): ?>
+                                    <a href="javascript:void(0);" onclick="agregarAlCarrito(<?php echo $row->producto_id; ?>)"
+                                        class="btn btn-primary">Agregar al carrito</a>
+                                <?php else: ?>
+                                    <button class="btn btn-secondary" disabled>Agotado</button>
+                                <?php endif; ?>
                             </div>
                         </div>
                     <?php endforeach; ?>

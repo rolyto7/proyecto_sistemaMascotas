@@ -169,4 +169,15 @@ class Productos_model extends CI_Model
         $query = $this->db->get('productos');
         return $query->row_array();
     }
+    public function obtener_producto($producto_id)
+    {
+        return $this->db->get_where('productos', ['producto_id' => $producto_id])->row();
+    }
+
+    // Actualizar el stock del producto
+    public function actualizar_stock($producto_id, $nuevo_stock)
+    {
+        $this->db->where('producto_id', $producto_id);
+        return $this->db->update('productos', ['stock' => $nuevo_stock]);
+    }
 }

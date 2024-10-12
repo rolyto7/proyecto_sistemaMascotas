@@ -270,21 +270,19 @@ class Welcome extends CI_Controller
 			return;
 		}
 
-		// Verificar si el cliente ya existe
+		// Buscar o guardar el cliente
 		$cliente = $this->Cliente_model->buscar_cliente_por_ci($data['ci']);
 		log_message('debug', 'Cliente encontrado: ' . json_encode($cliente));
 
 		if (!$cliente) {
-			// Si el cliente no existe, crear uno nuevo
 			$cliente_id = $this->Cliente_model->guardar_cliente($data);
 			log_message('debug', 'Nuevo cliente creado con ID: ' . $cliente_id);
 		} else {
-			// Si el cliente ya existe, usar el ID del cliente existente
 			$cliente_id = $cliente->cliente_id;
 			log_message('debug', 'Cliente existente con ID: ' . $cliente_id);
 		}
 
-		// Obtener el carrito
+		// Obtener el carrito de la sesión
 		$this->load->library('session');
 		$carrito = $this->session->userdata('carrito');
 		log_message('debug', 'Carrito recibido: ' . json_encode($carrito));
@@ -294,12 +292,8 @@ class Welcome extends CI_Controller
 			return;
 		}
 
-		// Preparar los detalles del pedido
-		$fecha_pedido = date('Y-m-d H:i:s');
-		log_message('debug', 'Fecha del pedido: ' . $fecha_pedido);
-
 		// Guardar el pedido
-		$pedido_id = $this->Pedido_model->guardar_pedido($cliente_id, $fecha_pedido);
+		$pedido_id = $this->Pedido_model->guardar_pedido($cliente_id);
 		log_message('debug', 'ID del pedido guardado: ' . $pedido_id);
 
 		if (!$pedido_id) {
@@ -307,21 +301,32 @@ class Welcome extends CI_Controller
 			return;
 		}
 
-		// Guardar los detalles del pedido
+		// Recorrer los productos del carrito y guardar los detalles del pedido
 		foreach ($carrito as $producto) {
+			// Guardar el detalle del pedido
 			if (!$this->Pedido_model->guardar_detalle_pedido($pedido_id, $producto['producto_id'], $producto['cantidad'])) {
 				echo json_encode(['status' => 'error', 'message' => 'Error al guardar los detalles del pedido']);
 				return;
 			}
+
+			// Descontar el stock del producto
+			$producto_actual = $this->Productos_model->obtener_producto($producto['producto_id']);
+			if ($producto_actual) {
+				$nuevo_stock = $producto_actual->stock - $producto['cantidad'];
+				if ($nuevo_stock < 0) {
+					// Si el stock es insuficiente, enviar un error
+					echo json_encode(['status' => 'error', 'message' => 'Stock insuficiente para el producto: ' . $producto['nombre']]);
+					return;
+				}
+				// Actualizar el stock del producto
+				$this->Productos_model->actualizar_stock($producto['producto_id'], $nuevo_stock);
+			}
 		}
 
-		// Limpiar el carrito después de realizar el pedido
+		// Vaciar el carrito
 		$this->session->unset_userdata('carrito');
 
 		echo json_encode(['status' => 'success']);
 	}
-
-
-
 
 }

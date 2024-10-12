@@ -313,107 +313,115 @@
     </div>
 
     <div class="container">
-        <div class="product-details">
-            <?php if (!empty($producto)): ?>
-                <div class="product-images">
-                    <img src="<?= $producto['imagen_url']; ?>" alt="<?= $producto['nombre']; ?>" class="main-image">
+    <div class="product-details">
+        <?php if (!empty($producto)): ?>
+            <div class="product-images">
+                <img src="<?= $producto['imagen_url']; ?>" alt="<?= $producto['nombre']; ?>" class="main-image">
+            </div>
+            <div class="product-info">
+                <h2><?= $producto['nombre']; ?></h2>
+                <p class="product-price">
+                    <?php
+                    // Calcular el precio con descuento basado en el valor del atributo oferta
+                    $precio = $producto['precio'];
+                    $descuento = 0;
+                    if ($producto['oferta'] == 1) {
+                        $descuento = 0.10; // 10%
+                    } elseif ($producto['oferta'] == 2) {
+                        $descuento = 0.15; // 15%
+                    } elseif ($producto['oferta'] == 3) {
+                        $descuento = 0.20; // 20%
+                    }
+                    $precioConDescuento = $precio - ($precio * $descuento);
+                    ?>
+
+                    <?php if ($producto['oferta'] > 0): ?>
+                        <span class="original-price">Bs. <?= number_format($producto['precio'], 2); ?></span> <br>
+                        <span class="discount-price">Bs. <?= number_format($precioConDescuento, 2); ?>
+                            (<?= $descuento * 100; ?>% OFF)</span>
+                    <?php else: ?>
+                        Bs. <?= number_format($producto['precio'], 2); ?>
+                    <?php endif; ?>
+                </p>
+                <p><strong>Categoría:</strong> <?= $producto['categoria']; ?></p>
+                <p><strong>Stock disponible:</strong> <?= $producto['stock']; ?></p>
+                <p><strong>Descripción:</strong> <?= $producto['descripcion']; ?></p>
+
+                <div class="quantity-selector">
+                    <button type="button" class="btn btn-outline-secondary" 
+                        onclick="this.parentNode.querySelector('input[type=number]').stepDown()" 
+                        <?= ($producto['stock'] <= 0) ? 'disabled' : ''; ?>>-</button>
+                    <input type="number" id="cantidad" value="1" min="1" max="<?= $producto['stock']; ?>" 
+                        class="form-control quantity-input" <?= ($producto['stock'] <= 0) ? 'disabled' : ''; ?>>
+                    <button type="button" class="btn btn-outline-secondary" 
+                        onclick="this.parentNode.querySelector('input[type=number]').stepUp()" 
+                        <?= ($producto['stock'] <= 0) ? 'disabled' : ''; ?>>+</button>
                 </div>
-                <div class="product-info">
-                    <h2><?= $producto['nombre']; ?></h2>
-                    <p class="product-price">
-                        <?php
-                        // Calcular el precio con descuento basado en el valor del atributo oferta
-                        $precio = $producto['precio'];
-                        $descuento = 0;
-                        if ($producto['oferta'] == 1) {
-                            $descuento = 0.10; // 10%
-                        } elseif ($producto['oferta'] == 2) {
-                            $descuento = 0.15; // 15%
-                        } elseif ($producto['oferta'] == 3) {
-                            $descuento = 0.20; // 20%
-                        }
-                        $precioConDescuento = $precio - ($precio * $descuento);
-                        ?>
 
-                        <?php if ($producto['oferta'] > 0): ?>
-                            <span class="original-price">Bs. <?= number_format($producto['precio'], 2); ?></span> <br>
-                            <span class="discount-price">Bs. <?= number_format($precioConDescuento, 2); ?>
-                                (<?= $descuento * 100; ?>% OFF)</span>
-                        <?php else: ?>
-                            Bs. <?= number_format($producto['precio'], 2); ?>
-                        <?php endif; ?>
-                    </p>
-                    <p><strong>Categoría:</strong> <?= $producto['categoria']; ?></p>
-                    <p><strong>Stock disponible:</strong> <?= $producto['stock']; ?></p>
-                    <p><strong>Descripción:</strong> <?= $producto['descripcion']; ?></p>
+                <button type="button" class="add-to-cart" 
+                    onclick="agregarAlCarrito(<?= $producto['producto_id']; ?>)" 
+                    <?= ($producto['stock'] <= 0) ? 'disabled' : ''; ?>>Añadir al carrito</button>
 
-                    <div class="quantity-selector">
-                        <button type="button" class="btn btn-outline-secondary"
-                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()">-</button>
-                        <input type="number" id="cantidad" value="1" min="1" max="<?= $producto['stock']; ?>"
-                            class="form-control quantity-input">
-                        <button type="button" class="btn btn-outline-secondary"
-                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>
-                    </div>
+                <?php if ($producto['stock'] <= 0): ?>
+                    <p class="text-danger">Este producto no está disponible actualmente.</p>
+                <?php endif; ?>
 
-                    <button type="button" class="add-to-cart"
-                        onclick="agregarAlCarrito(<?= $producto['producto_id']; ?>)">Añadir al carrito</button>
-                    <a href="<?= site_url('Welcome/TiendaGatos') ?>" class="back-to-shop">Volver a la tienda</a>
+                <a href="<?= site_url('Welcome/TiendaGatos') ?>" class="back-to-shop">Volver a la tienda</a>
 
-                    <div class="product-description-box">
-                        <h4>Detalles adicionales</h4>
-                        <p>Aquí puedes añadir información extra o reseñas del producto.</p>
-                    </div>
+                <div class="product-description-box">
+                    <h4>Detalles adicionales</h4>
+                    <p>Aquí puedes añadir información extra o reseñas del producto.</p>
                 </div>
-            <?php else: ?>
-                <p>No se encontraron detalles del producto.</p>
-            <?php endif; ?>
-        </div>
+            </div>
+        <?php else: ?>
+            <p>No se encontraron detalles del producto.</p>
+        <?php endif; ?>
     </div>
+</div>
 
-    <!-- Modal de Confirmación -->
-    <div class="modal fade" id="carritoModal" tabindex="-1" role="dialog" aria-labelledby="carritoModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="carritoModalLabel">Producto Agregado</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    El producto ha sido agregado al carrito.
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <a href="<?= site_url('Welcome/carrito') ?>" class="btn btn-primary">Ver Carrito</a>
-                </div>
+<!-- Modal de Confirmación -->
+<div class="modal fade" id="carritoModal" tabindex="-1" role="dialog" aria-labelledby="carritoModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="carritoModalLabel">Producto Agregado</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                El producto ha sido agregado al carrito.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <a href="<?= site_url('Welcome/carrito') ?>" class="btn btn-primary">Ver Carrito</a>
             </div>
         </div>
     </div>
+</div>
 
-    <script>
-        function agregarAlCarrito(producto_id) {
-            var cantidad = document.getElementById('cantidad').value;
+<script>
+    function agregarAlCarrito(producto_id) {
+        var cantidad = document.getElementById('cantidad').value;
 
-            $.ajax({
-                url: '<?= site_url('Welcome/agregar_al_carrito') ?>',
-                method: 'POST',
-                data: {
-                    producto_id: producto_id,
-                    cantidad: cantidad
-                },
-                success: function (response) {
-                    // Mostrar el modal si la respuesta es positiva
-                    $('#carritoModal').modal('show');
-                },
-                error: function (xhr, status, error) {
-                    console.error('Error al agregar al carrito:', status, error);
-                }
-            });
-        }
-    </script>
+        $.ajax({
+            url: '<?= site_url('Welcome/agregar_al_carrito') ?>',
+            method: 'POST',
+            data: {
+                producto_id: producto_id,
+                cantidad: cantidad
+            },
+            success: function (response) {
+                // Mostrar el modal si la respuesta es positiva
+                $('#carritoModal').modal('show');
+            },
+            error: function (xhr, status, error) {
+                console.error('Error al agregar al carrito:', status, error);
+            }
+        });
+    }
+</script>
+
 </body>
 
 </html>

@@ -268,7 +268,7 @@
                         <svg class="cartIcon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M6 6H21L20 12H8L6 6Z" />
                         </svg>
-                        Finalizar Compra
+                        Finalizar Pedido
                     </a>
                 </div>
             </div>
@@ -371,7 +371,6 @@
                 .then(data => {
                     if (data.status === 'success') {
                         alert("¡Pedido realizado con éxito!");
-                        // Limpiar el carrito en el servidor y redirigir a la página del carrito vacío
                         window.location.href = "<?php echo site_url('Welcome/vaciar_carrito'); ?>";
                     } else {
                         alert("Hubo un error al realizar el pedido.");
@@ -382,8 +381,6 @@
                     alert("Hubo un error al realizar el pedido.");
                 });
         }
-
-
     </script>
 </body>
 

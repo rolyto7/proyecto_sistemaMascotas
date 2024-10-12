@@ -47,6 +47,7 @@
         }
 
         .card {
+            position: relative;
             border: 1px solid #ddd;
             border-radius: 8px;
             overflow: hidden;
@@ -56,6 +57,7 @@
             min-height: 300px;
             display: flex;
             flex-direction: column;
+            background-color: #fff;
         }
 
         .card-img-top {
@@ -63,12 +65,42 @@
             height: 200px;
             object-fit: contain;
             background-color: #f0f0f0;
-            ;
         }
 
         .card-body {
             padding: 10px;
             flex: 1;
+        }
+
+        .stock-out-message {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 0, 0, 0.8);
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            font-size: 1.5em;
+            font-weight: bold;
+            transform: rotate(-45deg);
+            transform-origin: center;
+            pointer-events: none;
+            z-index: 10;
+            display: none;
+        }
+
+        .stock-out-message::before {
+            content: "AGOTADO";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #fff;
+            white-space: nowrap;
         }
 
         .sidebar {
@@ -193,12 +225,14 @@
                         $precioConDescuento = $precio - ($precio * $descuento);
                         ?>
                         <div class="card">
+                            <?php if ($row->stock == 0): ?>
+                                <div class="stock-out-message">AGOTADO</div>
+                            <?php endif; ?>
                             <a href="<?= site_url('Welcome/detallesperro/' . $row->producto_id); ?>"
                                 title="Ver detalles de <?php echo $row->nombre; ?>">
                                 <img class="card-img-top" src="<?php echo $row->imagen_url; ?>"
                                     alt="<?php echo $row->nombre; ?>">
                             </a>
-
 
                             <div class="card-body">
                                 <h5 class="card-title"><?php echo $row->nombre; ?></h5>
@@ -217,32 +251,30 @@
                                     </p>
                                 <?php else: ?>
                                     <p class="card-text">Bs. <?php echo number_format($row->precio, 2); ?></p>
+                                    <p class="card-text">Stock: <?php echo $row->stock; ?> unidades</p>
                                 <?php endif; ?>
-                                <a href="javascript:void(0);" onclick="agregarAlCarrito(<?php echo $row->producto_id; ?>, 1)"
-                                    class="btn btn-primary btn-icon" title="Agregar <?php echo $row->nombre; ?> al carrito">
-                                    Agregar al Carrito
-                                    <i class="bi bi-cart-plus"></i>
-                                </a>
+
+                                <?php if ($row->stock > 0): ?>
+                                    <a href="javascript:void(0);" onclick="agregarAlCarrito(<?php echo $row->producto_id; ?>)"
+                                        class="btn btn-primary">Agregar al carrito</a>
+                                <?php else: ?>
+                                    <button class="btn btn-secondary" disabled>Agotado</button>
+                                <?php endif; ?>
                             </div>
                         </div>
                     <?php endforeach; ?>
                 <?php else: ?>
-                    <p>No se encontraron productos.</p>
+                    <p>No hay productos disponibles.</p>
                 <?php endif; ?>
             </div>
         </div>
-
         <div class="sidebar">
-            <div class="section">
-                <div class="aside">
-                    <ul>
-                        <li><a href="<?= site_url('Welcome/AlimentoPerros') ?>">Alimento</a></li>
-                        <li><a href="<?= site_url('Welcome/AccesoriosPerros') ?>">Accesorios</a></li>
-                        <li><a href="<?= site_url('Welcome/JuguetesPerros') ?>">Juguetes</a></li>
-                        <li><a href="<?= site_url('Welcome/HigienePerros') ?>">Higiene</a></li>
-                    </ul>
-                </div>
-            </div>
+            <h4>Categorías</h4>
+            <ul>
+                <li><a href="<?= site_url('Welcome/productos?categoria=1') ?>">Categoría 1</a></li>
+                <li><a href="<?= site_url('Welcome/productos?categoria=2') ?>">Categoría 2</a></li>
+                <li><a href="<?= site_url('Welcome/productos?categoria=3') ?>">Categoría 3</a></li>
+            </ul>
         </div>
     </div>
     <div class="modal fade" id="carritoModal" tabindex="-1" role="dialog" aria-labelledby="carritoModalLabel"

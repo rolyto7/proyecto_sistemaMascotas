@@ -54,7 +54,11 @@ class Usuario_model extends CI_Model
         return $query->row(); // Debería devolver un objeto con los datos del usuario
     }
 
-
+    public function get_all_usuarios()
+    {
+        $query = $this->db->get('usuario');
+        return $query->result();
+    }
 
 
 

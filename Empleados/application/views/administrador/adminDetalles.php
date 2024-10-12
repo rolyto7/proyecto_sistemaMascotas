@@ -12,7 +12,8 @@
     <link href="img/favicon.ico" rel="icon">
 
     <!-- Google Web Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Nunito:wght@600;700;800&display=swap"
+        rel="stylesheet">
 
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -26,7 +27,31 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="<?php echo base_url(); ?>assets/css/style1.css" rel="stylesheet">
+    <style>
+        .custom-select-reportitos {
+            background-color: transparent;
+            color: white;
+            border: none;
+            text-align: center;
+            text-align-last: center;
+            font-size: 20px;
+            height: 100%;
+            appearance: none;
+            margin-top: 10px;
+        }
+
+        .custom-select-reportitos option {
+            background-color: black;
+            color: white;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+        }
+    </style>
 </head>
+
 
 <body>
     <!-- Topbar Start -->
@@ -41,14 +66,15 @@
 
         </div>
     </div>
-    <!-- Topbar End -->
+
 
 
     <!-- Navbar Start -->
     <div class="container-fluid p-0">
         <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3 py-lg-0 px-lg-5">
             <a href="" class="navbar-brand d-block d-lg-none">
-                <h1 class="m-0 display-5 text-capitalize font-italic text-white"><span class="text-primary">Safety</span>First</h1>
+                <h1 class="m-0 display-5 text-capitalize font-italic text-white"><span
+                        class="text-primary">Safety</span>First</h1>
             </a>
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                 <span class="navbar-toggler-icon"></span>
@@ -58,36 +84,139 @@
                     <a href="<?php echo site_url('Welcome/admin'); ?>" class="nav-item nav-link">Usuarios</a>
                     <a href="<?php echo site_url('Welcome/adminProductos'); ?>" class="nav-item nav-link">Productos</a>
                     <a href="<?php echo site_url('Welcome/adminDetalles'); ?>" class="nav-item nav-link">Ventas</a>
+                    <div class="nav-item">
+                        <select class="custom-select-reportitos" onchange="location = this.value;">
+                            <option value="" disabled selected>Reportes</option>
+                            <option value="<?php echo site_url('Welcome/reporte_usuario'); ?>">Reportes de
+                                Usuario</option>
+                            <option value="<?php echo site_url('Welcome/reporte_por_producto_categoria'); ?>">Reporte
+                                por Producto y Categoria</option>
+                            <option value="<?php echo site_url('Welcome/reporte_producto_mas_vendido'); ?>">Producto Más
+                                Vendido y Categoría</option>
+                        </select>
+                    </div>
                 </div>
-                <a href="<?php echo site_url('Welcome/cerrarsesion'); ?>" class="btn btn-lg btn-primary px-3 d-none d-lg-block">Cerrar Sesion</a>
+                <a href="<?php echo site_url('Welcome/cerrarsesion'); ?>"
+                    class="btn btn-lg btn-primary px-3 d-none d-lg-block">Cerrar Sesion</a>
             </div>
         </nav>
     </div>
-    <!-- Navbar End -->
-
-
     <!-- Blog Start -->
-    
-        
-        <!-- Back to Top -->
-        <a href="#" class="btn btn-lg btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+    <div class="container pt-5">
+        <h1 class="text-secondary mb-3">Detalles de pedidos sin entregar</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Estado</th>
+                    <th>Fecha del Pedido</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($detalles as $detalle): ?>
+                    <tr>
+                        <td><?php echo $detalle['id']; ?></td>
+                        <td><?php echo $detalle['producto_nombre']; ?></td>
+                        <td><?php echo $detalle['cantidad']; ?></td>
+                        <td>
+                            <?php
+                            // Mostrar el estado en texto
+                            switch ($detalle['estado']) {
+                                case 1:
+                                    echo 'Pendiente';
+                                    break;
+                                case 2:
+                                    echo 'Cancelado';
+                                    break;
+                                case 3:
+                                    echo 'Entregado';
+                                    break;
+                                default:
+                                    echo 'Desconocido';
+                            }
+                            ?>
+                        </td>
+                        <td><?php echo $detalle['fechaPedido']; ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+        <h2 class="text-secondary mb-3"> Detalle de Ventas Realizadas</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Cliente</th>
+                    <th>Pedido ID</th>
+                    <th>Total</th>
+                    <th>Estado</th>
+                    <th>Fecha del Pedido</th>
+                    <th>Fecha de Venta</th>
+                    <th>Entregador</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($ventas as $venta): ?>
+                    <tr>
+                        <td><?php echo $venta['id']; ?></td>
+                        <td><?php echo $venta['cliente_nombre'] . ' ' . $venta['cliente_primerApellido']; ?></td>
+                        <td><?php echo $venta['pedido_id']; ?></td>
+                        <td><?php echo $venta['total']; ?></td>
+                        <td>
+                            <?php
+                            // Mostrar el estado en texto
+                            switch ($venta['estado']) {
+                                case 1:
+                                    echo 'Pendiente';
+                                    break;
+                                case 2:
+                                    echo 'Cancelado';
+                                    break;
+                                case 3:
+                                    echo 'Entregado';
+                                    break;
+                                default:
+                                    echo 'Desconocido';
+                            }
+                            ?>
+                        </td>
+                        <td><?php echo $venta['fechaPedido']; ?></td>
+                        <td><?php echo $venta['fechaVenta']; ?></td>
+                        <td>
+                            <?php
+                            echo $venta['entregador_nombre'] . ' ' . $venta['entregador_primerApellido'] . ' ' . $venta['entregador_segundoApellido'];
+                            ?>
+                        </td>
+                        <td>
+                            <a href="<?php echo site_url('Welcome/verDetallePedido/' . $venta['pedido_id']); ?>"
+                                class="btn btn-info btn-sm">Ver Detalles</a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
 
 
-        <!-- JavaScript Libraries -->
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-        <script src="lib/easing/easing.min.js"></script>
-        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-        <script src="lib/tempusdominus/js/moment.min.js"></script>
-        <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-        <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
-        <!-- Contact Javascript File -->
-        <script src="mail/jqBootstrapValidation.min.js"></script>
-        <script src="mail/contact.js"></script>
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="lib/tempusdominus/js/moment.min.js"></script>
+    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
-        <!-- Template Javascript -->
-        <script src="js/main.js"></script>
+    <!-- Contact Javascript File -->
+    <script src="mail/jqBootstrapValidation.min.js"></script>
+    <script src="mail/contact.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
 </body>
 
 </html>

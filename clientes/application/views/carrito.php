@@ -360,15 +360,14 @@
                 .then(data => {
                     if (data.status === 'success') {
                         alert("¡Pedido realizado con éxito!");
-                        // Limpiar el carrito en el servidor y redirigir a la página del carrito vacío
                         window.location.href = "<?php echo site_url('Welcome/vaciar_carrito'); ?>";
                     } else {
-                        alert("Hubo un error al realizar el pedido.");
+                        alert("Hubo un error al realizar el pedido. 1");
                     }
                 })
                 .catch(error => {
                     console.error("Error al realizar el pedido:", error);
-                    alert("Hubo un error al realizar el pedido.");
+                    alert("Hubo un error al realizar el pedido.aaaaa");
                 });
         }
     </script>

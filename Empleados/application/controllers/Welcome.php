@@ -16,6 +16,8 @@ class Welcome extends CI_Controller
 		$this->load->library('session');
 		$this->load->model('Pedido_model');
 		$this->load->model('Cliente_model');
+		$this->load->model('Detalles_model');
+		$this->load->model('Reportes_model');
 	}
 	private function check_session_and_load_view($view, $data = array())
 	{
@@ -28,6 +30,52 @@ class Welcome extends CI_Controller
 			redirect('Welcome/login');
 		}
 	}
+	// Reportes.php (Controlador)
+	public function reporte_usuario()
+	{
+		$usuario_id = $this->input->post('usuario_id');
+		$fecha_inicio = $this->input->post('fecha_inicio');
+		$fecha_fin = $this->input->post('fecha_fin');
+
+		$data['usuarios'] = $this->Usuario_model->get_all_usuarios(); // Para mantener el selector de usuarios
+		$data['reporte'] = $this->Reportes_model->get_reporte($usuario_id, $fecha_inicio, $fecha_fin);
+
+		$this->load->view('reportes/reporte_usuario', $data);
+	}
+	public function reporte_por_producto_categoria()
+	{
+		$producto_id = $this->input->post('producto_id');
+		$categoria = $this->input->post('categoria');
+		$fecha_inicio = $this->input->post('fecha_inicio');
+		$fecha_fin = $this->input->post('fecha_fin');
+
+		$data['categorias'] = $this->Productos_model->get_all_categoria();
+		$data['productos'] = $this->Productos_model->get_all_nombres();
+		$data['reporte'] = $this->Reportes_model->get_reporte_productos($producto_id, $categoria, $fecha_inicio, $fecha_fin);
+
+		$data['producto_id'] = $producto_id;
+		$data['categoria'] = $categoria;
+
+		$this->load->view('reportes/reporte_producto_categoria', $data);
+	}
+
+	// Reportes.php (Controlador)
+	public function reporte_producto_mas_vendido()
+	{
+		$fecha_inicio = $this->input->post('fecha_inicio');
+		$fecha_fin = $this->input->post('fecha_fin');
+
+		$data['productos'] = $this->Reportes_model->get_products_sold_ordered($fecha_inicio, $fecha_fin);
+		$data['backgroundColor'] = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40', '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0']; // Colores para el gráfico
+
+		// Cargar la vista con los datos
+		$this->load->view('reportes/reporte_producto_mas_vendido', $data);
+	}
+
+
+
+
+
 
 	public function cerrarsesion()
 	{
@@ -323,8 +371,19 @@ class Welcome extends CI_Controller
 	}
 	public function adminDetalles()
 	{
-		$data['productos'] = $this->Productos_model->obtenerProducto();
+		$this->load->model('Detalles_model');
+		$data['detalles'] = $this->Detalles_model->get_detalles_pedidos();
+		$data['ventas'] = $this->Detalles_model->get_ventas();
+
+		// Cargar la vista con los datos
 		$this->load->view('administrador/adminDetalles', $data);
+	}
+	public function verDetallePedido($pedido_id)
+	{
+		$this->load->model('Detalles_model');
+		$data['detalle_pedido'] = $this->Detalles_model->get_detalle_pedido($pedido_id);
+
+		$this->load->view('administrador/verDetallePedido', $data);
 	}
 
 	public function editarProduct()
@@ -394,7 +453,7 @@ class Welcome extends CI_Controller
 
 			// Redireccionar después de enviar el correo
 			$this->load->view('welcome_message', $data);
-			redirect('administrador/admin');
+			redirect('admin');
 		}
 	}
 
@@ -540,11 +599,26 @@ class Welcome extends CI_Controller
 	public function cancelar_pedido($pedido_id)
 	{
 		$this->load->model('Pedido_model');
+		$this->load->model('Productos_model'); // Asegúrate de cargar el modelo de productos
+
+		// Obtener los detalles del pedido
+		$detalles_pedido = $this->Pedido_model->get_detalles_pedido($pedido_id);
+
+		// Iniciar la transacción
+		$this->db->trans_start();
 
 		// Cambiar el estado del pedido a 'Cancelado'
 		$resultado = $this->Pedido_model->actualizar_estado_pedido($pedido_id, 2); // 2 es el estado 'Cancelado'
 
 		if ($resultado) {
+			// Sumar la cantidad al stock por cada producto del pedido cancelado
+			foreach ($detalles_pedido as $detalle) {
+				$producto_id = $detalle['producto_id'];
+				$cantidad = $detalle['cantidad'];
+				// Llama al método para sumar el stock
+				$this->Productos_model->sumar_stock($producto_id, $cantidad);
+			}
+
 			// Redirigir o mostrar un mensaje de éxito
 			$this->session->set_flashdata('mensaje', 'Pedido cancelado correctamente.');
 		} else {
@@ -552,8 +626,12 @@ class Welcome extends CI_Controller
 			$this->session->set_flashdata('mensaje', 'Error al cancelar el pedido.');
 		}
 
+		// Completar la transacción
+		$this->db->trans_complete();
+
 		redirect('Welcome/ver_pedidos');
 	}
+
 	public function procesar_compra()
 	{
 		$productos = $this->input->post('productos'); // Array de productos con id y cantidad
@@ -580,48 +658,53 @@ class Welcome extends CI_Controller
 		// Iniciar la transacción
 		$this->db->trans_start();
 
-		// Obtener detalles del pedido
+		// Obtener el pedido
 		$pedido = $this->Pedido_model->get_pedido_by_id($pedido_id);
 		if (!$pedido) {
-			$this->db->trans_rollback(); // Revertir la transacción
+			$this->db->trans_rollback();
 			show_error('Pedido no encontrado.');
 			return;
 		}
 
-		// Obtener el ID del usuario actualmente autenticado
-		$usuario_id = $this->session->userdata('usuario_id');
+		$detalles_pedido = $this->Pedido_model->get_detalles_pedido($pedido_id);
 
-		// Insertar una nueva venta
+		// Ya no se actualizará la cantidad de stock por cada producto
+		// Puedes eliminar el bloque que descuenta el stock:
+		/*
+								foreach ($detalles_pedido as $detalle) {
+									$producto_id = $detalle['producto_id'];
+									$cantidad = $detalle['cantidad'];
+									// Descontar la cantidad del stock
+									$this->Productos_model->descontar_stock($producto_id, $cantidad);
+								}
+								*/
+
+		// Insertar la venta
+		$usuario_id = $this->session->userdata('usuario_id');
 		$venta_data = [
 			'usuario_id' => $usuario_id,
 			'cliente_id' => $pedido['cliente_id'],
-			'total' => $pedido['total'], // Asegúrate de obtener el total correcto
-			'estado' => 3, // Estado 'Completado' (ajusta según tu definición)
-			'fechaPedido' => $pedido['fecha_pedido'] // Corregido a 'fecha_pedido'
+			'pedido_id' => $pedido['pedido_id'],
+			'total' => $pedido['total'],
+			'estado' => 3,
+			'fechaPedido' => $pedido['fecha_pedido']
 		];
 
 		$this->Venta_model->insert_venta($venta_data);
 
-		// Actualizar el estado en la tabla detalles_pedidos
-		$this->Venta_model->update_detalles_estado($pedido_id, 3); // Estado 'Entregado'
+		// Actualizar el estado del pedido en detalles
+		$this->Venta_model->update_detalles_estado($pedido_id, 3);
 
 		// Completar la transacción
 		$this->db->trans_complete();
 
-		// Verificar el estado de la transacción
 		if ($this->db->trans_status() === FALSE) {
-			// Si algo falló, se hace un rollback y se muestra un error
 			show_error('Ocurrió un error al procesar la transacción.');
 		} else {
-			// Redirigir a la lista de pedidos o ventas si todo salió bien
+			$this->session->set_flashdata('pedido_entregado', 'Pedido entregado con éxito');
 			redirect('Welcome/ver_pedidos');
 		}
 	}
-
-
-
-
-
 
 	public function ofertas()
 	{
@@ -669,21 +752,19 @@ class Welcome extends CI_Controller
 			return;
 		}
 
-		// Verificar si el cliente ya existe
+		// Buscar o guardar el cliente
 		$cliente = $this->Cliente_model->buscar_cliente_por_ci($data['ci']);
 		log_message('debug', 'Cliente encontrado: ' . json_encode($cliente));
 
 		if (!$cliente) {
-			// Si el cliente no existe, crear uno nuevo
 			$cliente_id = $this->Cliente_model->guardar_cliente($data);
 			log_message('debug', 'Nuevo cliente creado con ID: ' . $cliente_id);
 		} else {
-			// Si el cliente ya existe, usar el ID del cliente existente
 			$cliente_id = $cliente->cliente_id;
 			log_message('debug', 'Cliente existente con ID: ' . $cliente_id);
 		}
 
-		// Obtener el carrito
+		// Obtener el carrito de la sesión
 		$this->load->library('session');
 		$carrito = $this->session->userdata('carrito');
 		log_message('debug', 'Carrito recibido: ' . json_encode($carrito));
@@ -693,12 +774,8 @@ class Welcome extends CI_Controller
 			return;
 		}
 
-		// Preparar los detalles del pedido
-		$fecha_pedido = date('Y-m-d H:i:s');
-		log_message('debug', 'Fecha del pedido: ' . $fecha_pedido);
-
 		// Guardar el pedido
-		$pedido_id = $this->Pedido_model->guardar_pedido($cliente_id, $fecha_pedido);
+		$pedido_id = $this->Pedido_model->guardar_pedido($cliente_id);
 		log_message('debug', 'ID del pedido guardado: ' . $pedido_id);
 
 		if (!$pedido_id) {
@@ -706,17 +783,32 @@ class Welcome extends CI_Controller
 			return;
 		}
 
-		// Guardar los detalles del pedido
+		// Recorrer los productos del carrito y guardar los detalles del pedido
 		foreach ($carrito as $producto) {
+			// Guardar el detalle del pedido
 			if (!$this->Pedido_model->guardar_detalle_pedido($pedido_id, $producto['producto_id'], $producto['cantidad'])) {
 				echo json_encode(['status' => 'error', 'message' => 'Error al guardar los detalles del pedido']);
 				return;
 			}
+
+			// Descontar el stock del producto
+			$producto_actual = $this->Productos_model->obtener_producto($producto['producto_id']);
+			if ($producto_actual) {
+				$nuevo_stock = $producto_actual->stock - $producto['cantidad'];
+				if ($nuevo_stock < 0) {
+					// Si el stock es insuficiente, enviar un error
+					echo json_encode(['status' => 'error', 'message' => 'Stock insuficiente para el producto: ' . $producto['nombre']]);
+					return;
+				}
+				// Actualizar el stock del producto
+				$this->Productos_model->actualiza_stock($producto['producto_id'], $nuevo_stock);
+			}
 		}
 
-		// Limpiar el carrito después de realizar el pedido
+		// Vaciar el carrito
 		$this->session->unset_userdata('carrito');
 
 		echo json_encode(['status' => 'success']);
 	}
+
 }

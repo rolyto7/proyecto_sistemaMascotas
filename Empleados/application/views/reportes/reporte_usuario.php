@@ -7,20 +7,15 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
-    <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
-    <!-- Google Web Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Nunito:wght@600;700;800&display=swap"
         rel="stylesheet">
-    <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <!-- Flaticon Font -->
     <link href="lib/flaticon/font/flaticon.css" rel="stylesheet">
-    <!-- Libraries Stylesheet -->
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
     <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
-    <!-- Customized Bootstrap Stylesheet -->
     <link href="<?php echo base_url(); ?>assets/css/style1.css" rel="stylesheet">
+    <link href="<?php echo base_url(); ?>assets/css/tabla.css" rel="stylesheet">
     <style>
         .custom-select-reportitos {
             background-color: transparent;
@@ -43,21 +38,102 @@
             display: flex;
             align-items: center;
         }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        /* Form styling */
+        form {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fafafa;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+
+        input[type="date"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        /* Table styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table th,
+        table td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        table th {
+            background-color: #007bff;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* No results message */
+        p {
+            font-size: 16px;
+            color: #666;
+        }
     </style>
 </head>
 
 <body>
     <!-- Topbar Start -->
     <div class="container-fluid">
+
         <div class="row py-3 px-lg-5">
             <div class="col-lg-4">
                 <a href="" class="navbar-brand d-none d-lg-block">
                     <h1 class="m-0 display-5 text-capitalize"><span class="text-primary">Pet</span>Shop</h1>
                 </a>
             </div>
+
         </div>
     </div>
     <!-- Topbar End -->
+
 
     <!-- Navbar Start -->
     <div class="container-fluid p-0">
@@ -91,61 +167,71 @@
             </div>
         </nav>
     </div>
+
+
+
     <!-- Navbar End -->
+
 
     <!-- Blog Start -->
     <div class="container pt-5">
-        <h4 class="text-secondary mb-3">Pet Detalles</h4>
-        <h2>Editar Usuario</h2>
-        <?php echo form_open('Welcome/update_usuario'); ?>
-        <input type="hidden" name="id" value="<?php echo $usuario['id']; ?>">
-        <div class="form-group">
-            <label>Nombre:</label>
-            <input type="text" class="form-control" name="nombre"
-                value="<?php echo set_value('nombre', $usuario['nombre']); ?>" required>
-        </div>
-        <div class="form-group">
-            <label>Primer Apellido:</label>
-            <input type="text" class="form-control" name="primerApellido"
-                value="<?php echo set_value('primerApellido', $usuario['primerApellido']); ?>" required>
-        </div>
-        <div class="form-group">
-            <label>Segundo Apellido:</label>
-            <input type="text" class="form-control" name="segundoApellido"
-                value="<?php echo set_value('segundoApellido', $usuario['segundoApellido']); ?>">
-        </div>
-        <div class="form-group">
-            <label>Fecha de Nacimiento:</label>
-            <input type="date" class="form-control" name="fechaNacimiento"
-                value="<?php echo set_value('fechaNacimiento', $usuario['fechaNacimiento']); ?>">
-        </div>
-        <div class="form-group">
-            <label>Dirección:</label>
-            <input type="text" class="form-control" name="direccion"
-                value="<?php echo set_value('direccion', $usuario['direccion']); ?>">
-        </div>
-        <div class="form-group">
-            <label>Teléfono:</label>
-            <input type="text" class="form-control" name="telefono"
-                value="<?php echo set_value('telefono', $usuario['telefono']); ?>">
-        </div>
-        <div class="form-group">
-            <label>Email:</label>
-            <input type="email" class="form-control" name="email"
-                value="<?php echo set_value('email', $usuario['email']); ?>">
-        </div>
-        <div class="form-group">
-            <label>Nombre de Usuario:</label>
-            <input type="text" class="form-control" name="nombre_usuario"
-                value="<?php echo set_value('nombre_usuario', $usuario['nombre_usuario']); ?>" required>
-        </div>
-        <div class="form-group">
-            <label>Estado Usuario:</label>
-            <input type="number" class="form-control" name="estadoUsuario"
-                value="<?php echo set_value('estadoUsuario', $usuario['estadoUsuario']); ?>" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Actualizar</button>
+        <h1>Generar Reporte por Usuario</h1>
+        <?php echo form_open('Welcome/reporte_usuario'); ?>
+        <label for="usuario">Seleccionar Empleado:</label>
+        <select name="usuario_id" id="usuario">
+            <?php foreach ($usuarios as $usuario): ?>
+                <option value="<?php echo $usuario->id; ?>"><?php echo $usuario->nombre; ?></option>
+            <?php endforeach; ?>
+        </select>
+
+        <label for="fecha_inicio">Fecha Inicio:</label>
+        <input type="date" name="fecha_inicio" id="fecha_inicio" required>
+
+        <label for="fecha_fin">Fecha Fin:</label>
+        <input type="date" name="fecha_fin" id="fecha_fin" required>
+
+        <input type="submit" value="Generar Reporte">
         <?php echo form_close(); ?>
+
+        <?php if (isset($reporte)): ?>
+            <h2>Resultados del Reporte</h2>
+            <?php if (!empty($reporte)): ?>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Empleado que entregó</th>
+                            <th>Nombre del Cliente</th>
+                            <th>Total</th>
+                            <th>Estado</th>
+                            <th>Fecha de Entrega</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($reporte as $venta): ?>
+                            <tr>
+                                <td><?php echo $venta->nombre_usuario . ' ' . $venta->apellido_usuario; ?></td>
+                                <td><?php echo $venta->nombre_cliente . ' ' . $venta->apellido_cliente; ?></td>
+                                <td><?php echo $venta->total; ?></td>
+                                <td>
+                                    <?php
+                                    if ($venta->estado == 1) {
+                                        echo 'Pendiente';
+                                    } elseif ($venta->estado == 2) {
+                                        echo 'Cancelado';
+                                    } elseif ($venta->estado == 3) {
+                                        echo 'Entregado';
+                                    }
+                                    ?>
+                                </td>
+                                <td><?php echo $venta->fechaVenta; ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php else: ?>
+                <p>No se encontraron resultados.</p>
+            <?php endif; ?>
+        <?php endif; ?>
     </div>
 
     <!-- JavaScript Libraries -->
@@ -156,9 +242,11 @@
     <script src="lib/tempusdominus/js/moment.min.js"></script>
     <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
     <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
     <!-- Contact Javascript File -->
     <script src="mail/jqBootstrapValidation.min.js"></script>
     <script src="mail/contact.js"></script>
+
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 </body>

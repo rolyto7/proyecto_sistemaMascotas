@@ -2,11 +2,10 @@
 class Pedido_model extends CI_Model
 {
 
-    public function guardar_pedido($cliente_id, $fecha_pedido)
+    public function guardar_pedido($cliente_id)
     {
         $data = array(
             'cliente_id' => $cliente_id,
-            'fechaPedido' => $fecha_pedido
         );
 
         $this->db->insert('pedidos', $data);
@@ -28,6 +27,38 @@ class Pedido_model extends CI_Model
         return $result;
     }
     public function get_pedidos($ci = null)
+    {
+        $this->db->select('detalles_pedidos.pedido_id,
+                        Clientes.nombre AS cliente_nombre, 
+                        Clientes.ci AS cliente_ci, 
+                        productos.nombre AS producto_nombre, 
+                        detalles_pedidos.cantidad AS cantidad,
+                        CASE detalles_pedidos.estado
+                            WHEN 1 THEN \'Pendiente\'
+                            WHEN 2 THEN \'Cancelado\'
+                            WHEN 3 THEN \'Completado\'
+                            ELSE \'Desconocido\'
+                        END AS estado,
+                        productos.precio AS precio, 
+                        pedidos.fechapedido AS fecha_pedido,
+                        (detalles_pedidos.cantidad * productos.precio) AS total');
+        $this->db->from('detalles_pedidos');
+        $this->db->join('pedidos', 'detalles_pedidos.pedido_id = pedidos.id');
+        $this->db->join('Clientes', 'pedidos.cliente_id = Clientes.cliente_id');
+        $this->db->join('productos', 'detalles_pedidos.producto_id = productos.producto_id');
+
+        // Si se proporciona un CI, filtra los resultados por CI
+        if ($ci) {
+            $this->db->where('Clientes.ci', $ci);
+        }
+
+        // Filtrar por estado Pendiente (1)
+        $this->db->where('detalles_pedidos.estado', 1);
+
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+    public function get_pedidosAdmin($ci = null)
     {
         $this->db->select('detalles_pedidos.pedido_id,
                         Clientes.nombre AS cliente_nombre, 
@@ -83,5 +114,14 @@ class Pedido_model extends CI_Model
     {
         $this->db->where('id', $pedido_id);
         $this->db->update('pedidos', ['estado' => $estado]);
+    }
+    public function get_detalles_pedido($pedido_id)
+    {
+        $this->db->select('producto_id, cantidad');
+        $this->db->from('detalles_pedidos');
+        $this->db->where('pedido_id', $pedido_id);
+
+        $query = $this->db->get();
+        return $query->result_array();
     }
 }

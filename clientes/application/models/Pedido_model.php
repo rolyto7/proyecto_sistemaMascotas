@@ -2,11 +2,10 @@
 class Pedido_model extends CI_Model
 {
 
-    public function guardar_pedido($cliente_id, $fecha_pedido)
+    public function guardar_pedido($cliente_id)
     {
         $data = array(
-            'cliente_id' => $cliente_id,
-            'fechaPedido' => $fecha_pedido
+            'cliente_id' => $cliente_id
         );
 
         $this->db->insert('pedidos', $data);
@@ -27,4 +26,5 @@ class Pedido_model extends CI_Model
         log_message('debug', 'Resultado de la inserción del detalle del pedido: ' . ($result ? 'Éxito' : 'Error'));
         return $result;
     }
+    
 }
