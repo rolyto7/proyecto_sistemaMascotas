@@ -203,8 +203,11 @@
             <div class="section">
                 <div class="aside">
                     <ul>
-                        <li><a href="<?= site_url('Welcome/AlimentoSecoPerros') ?>">Alimento Seco</a></li>
-                        <li><a href="<?= site_url('Welcome/AlimentoHumedoPerros') ?>">Alimento Humedo</a></li>
+                        <li><a href="<?= site_url('Welcome/AlimentoSecoPerros') ?>">Alimento Húmedo</a></li>
+                        <li><a href="<?= site_url('Welcome/AlimentoHumedoPerros') ?>">Alimento Seco</a></li>
+                        <li><a href="<?= site_url('Welcome/AlimentoSecoEspecialPerro') ?>">Alimento Seco Especial</a>
+                        </li>
+                        <li><a href="<?= site_url('Welcome/Snacks_Premios_Perro') ?>"> Snacks y Premios</a></li>
                     </ul>
                 </div>
             </div>

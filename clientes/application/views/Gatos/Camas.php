@@ -166,7 +166,7 @@
         </ul>
     </div>
 
-    <div class="banner" style="background-image: url('<?= base_url() ?>assets/images/fondoperros.png');"></div>
+    <div class="banner" style="background-image: url('<?= base_url() ?>assets/images/fondogatos.png');"></div>
     <div id="body">
         <div class="container">
             <div class="products">
@@ -186,7 +186,7 @@
                         $precioConDescuento = $precio - ($precio * $descuento);
                         ?>
                         <div class="card">
-                            <a href="<?= site_url('Welcome/detallesperro/' . $row->producto_id); ?>"
+                            <a href="<?= site_url('Welcome/detallesgato/' . $row->producto_id); ?>"
                                 title="Ver detalles de <?php echo $row->nombre; ?>">
                                 <img class="card-img-top" src="<?php echo $row->imagen_url; ?>"
                                     alt="<?php echo $row->nombre; ?>">
@@ -230,11 +230,14 @@
             <div class="section">
                 <div class="aside">
                     <ul>
-                        <li><a href="<?= site_url('Welcome/AlimentoSecoPerros') ?>">Alimento Húmedo</a></li>
-                        <li><a href="<?= site_url('Welcome/AlimentoHumedoPerros') ?>">Alimento Seco</a></li>
-                        <li><a href="<?= site_url('Welcome/AlimentoSecoEspecialPerro') ?>">Alimento Seco Especial</a>
+                        <li><a href="<?= site_url('Welcome/Casas_Camas_Gatos') ?>">Casas Camas y Frazadas</a></li>
+                        <li><a href="<?= site_url('Welcome/Torres_Rascadores_Gatos') ?>">Torres y Rascadores</a></li>
+                        <li><a href="<?= site_url('Welcome/Platos_Dispensadores_Gatos') ?>">Platos y Dispensadores</a>
                         </li>
-                        <li><a href="<?= site_url('Welcome/Snacks_Premios_Perro') ?>"> Snacks y Premios</a></li>
+                        <li><a href="<?= site_url('Welcome/Transportadores_Jaulas_Gatos') ?>">Transportadores y
+                                Jaulas</a></li>
+                        <li><a href="<?= site_url('Welcome/Collares_Percheras_Gatos') ?>">Collares Correas y
+                                Pecheras</a></li>
                     </ul>
                 </div>
             </div>

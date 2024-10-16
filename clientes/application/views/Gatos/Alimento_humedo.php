@@ -43,7 +43,7 @@
         .products {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 15px;
             justify-content: space-between;
             margin-top: 50px;
         }
@@ -54,18 +54,17 @@
             overflow: hidden;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 200px;
-            min-height: 300px;
+            max-width: 250px;
+            min-height: 350px;
             display: flex;
             flex-direction: column;
         }
 
         .card-img-top {
             width: 100%;
-            height: 200px;
+            height: 250px;
             object-fit: contain;
             background-color: #f0f0f0;
-            ;
         }
 
         .card-body {
@@ -166,7 +165,7 @@
         </ul>
     </div>
 
-    <div class="banner" style="background-image: url('<?= base_url() ?>assets/images/fondoperros.png');"></div>
+    <div class="banner" style="background-image: url('<?= base_url() ?>assets/images/fondogatos.png');"></div>
     <div id="body">
         <div class="container">
             <div class="products">
@@ -186,7 +185,7 @@
                         $precioConDescuento = $precio - ($precio * $descuento);
                         ?>
                         <div class="card">
-                            <a href="<?= site_url('Welcome/detallesperro/' . $row->producto_id); ?>"
+                            <a href="<?= site_url('Welcome/detallesgato/' . $row->producto_id); ?>"
                                 title="Ver detalles de <?php echo $row->nombre; ?>">
                                 <img class="card-img-top" src="<?php echo $row->imagen_url; ?>"
                                     alt="<?php echo $row->nombre; ?>">
@@ -230,11 +229,11 @@
             <div class="section">
                 <div class="aside">
                     <ul>
-                        <li><a href="<?= site_url('Welcome/AlimentoSecoPerros') ?>">Alimento Húmedo</a></li>
-                        <li><a href="<?= site_url('Welcome/AlimentoHumedoPerros') ?>">Alimento Seco</a></li>
-                        <li><a href="<?= site_url('Welcome/AlimentoSecoEspecialPerro') ?>">Alimento Seco Especial</a>
+                        <li><a href="<?= site_url('Welcome/AlimentoHumedoGatos') ?>">Alimento Húmedo</a></li>
+                        <li><a href="<?= site_url('Welcome/AlimentoSecoGatos') ?>">Alimento Seco</a></li>
+                        <li><a href="<?= site_url('Welcome/AlimentoSecoEspecialGato') ?>">Alimento Seco Especial</a>
                         </li>
-                        <li><a href="<?= site_url('Welcome/Snacks_Premios_Perro') ?>"> Snacks y Premios</a></li>
+                        <li><a href="<?= site_url('Welcome/Snacks_Premios_Gato') ?>"> Snacks y Premios</a></li>
                     </ul>
                 </div>
             </div>

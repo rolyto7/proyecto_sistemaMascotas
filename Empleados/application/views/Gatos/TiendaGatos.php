@@ -245,7 +245,7 @@
                     <ul>
                         <li><a href="<?= site_url('Welcome/AlimentoGatos') ?>">Alimento</a></li>
                         <li><a href="<?= site_url('Welcome/AccesoriosGatos') ?>">Accesorios</a></li>
-                        <li><a href="<?= site_url('Welcome/JuguetesGatos') ?>">Juguetes</a></li>
+                        <li><a href="<?= site_url('Welcome/JugueteGatos') ?>">Juguetes</a></li>
                         <li><a href="<?= site_url('Welcome/HigieneGatos') ?>">Higiene</a></li>
                     </ul>
                 </div>

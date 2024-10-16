@@ -269,11 +269,11 @@
             </div>
         </div>
         <div class="sidebar">
-            <h4>Categorías</h4>
             <ul>
-                <li><a href="<?= site_url('Welcome/productos?categoria=1') ?>">Categoría 1</a></li>
-                <li><a href="<?= site_url('Welcome/productos?categoria=2') ?>">Categoría 2</a></li>
-                <li><a href="<?= site_url('Welcome/productos?categoria=3') ?>">Categoría 3</a></li>
+                <li><a href="<?= site_url('Welcome/AlimentoPerros') ?>">Alimento</a></li>
+                <li><a href="<?= site_url('Welcome/AccesoriosPerros') ?>">Accesorios</a></li>
+                <li><a href="<?= site_url('Welcome/JuguetesPerros') ?>">Juguetes</a></li>
+                <li><a href="<?= site_url('Welcome/HigienePerros') ?>">Higiene</a></li>
             </ul>
         </div>
     </div>

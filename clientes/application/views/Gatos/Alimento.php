@@ -229,10 +229,10 @@
             <div class="section">
                 <div class="aside">
                     <ul>
-                        <li><a href="<?= site_url('Welcome/AlimentoGatos') ?>">Alimento</a></li>
-                        <li><a href="<?= site_url('Welcome/AccesoriosGatos') ?>">Accesorios</a></li>
-                        <li><a href="<?= site_url('Welcome/JuguetesGatos') ?>">Juguetes</a></li>
-                        <li><a href="<?= site_url('Welcome/HigieneGatos') ?>">Higiene</a></li>
+                        <li><a href="<?= site_url('Welcome/AlimentoHumedoGatos') ?>">Alimento Húmedo</a></li>
+                        <li><a href="<?= site_url('Welcome/AlimentoSecoGatos') ?>">Alimento Seco</a></li>
+                        <li><a href="<?= site_url('Welcome/AlimentoSecoEspecialGato') ?>">Alimento Seco Especial</a></li>
+                        <li><a href="<?= site_url('Welcome/Snacks_Premios_Gato') ?>"> Snacks y Premios</a></li>
                     </ul>
                 </div>
             </div>

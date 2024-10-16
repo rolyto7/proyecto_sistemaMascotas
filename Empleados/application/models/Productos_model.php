@@ -152,7 +152,7 @@ class Productos_model extends CI_Model
     public function obtener_higiene_perros()
     {
         $this->db->where('mascota', 'perro');
-        $this->db->where('categoria', 'Higiene');
+        $this->db->where('categoria', 'Estetica E Higiene');
         $query = $this->db->get('productos');
         return $query->result();
     }
@@ -209,5 +209,19 @@ class Productos_model extends CI_Model
     {
         $this->db->where('producto_id', $producto_id);
         return $this->db->update('productos', ['stock' => $nuevo_stock]);
+    }
+    public function obtener_alimento_humedo_gatos()
+    {
+        $this->db->where('mascota', 'gato');
+        $this->db->where('tipo', 'Alimento Humedo');
+        $query = $this->db->get('productos');
+        return $query->result();
+    }
+    public function obtener_alimento_seco_gatos()
+    {
+        $this->db->where('mascota', 'gato');
+        $this->db->where('tipo', 'Alimento Seco');
+        $query = $this->db->get('productos');
+        return $query->result();
     }
 }

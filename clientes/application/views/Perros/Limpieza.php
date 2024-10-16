@@ -230,11 +230,17 @@
             <div class="section">
                 <div class="aside">
                     <ul>
-                        <li><a href="<?= site_url('Welcome/AlimentoSecoPerros') ?>">Alimento Húmedo</a></li>
-                        <li><a href="<?= site_url('Welcome/AlimentoHumedoPerros') ?>">Alimento Seco</a></li>
-                        <li><a href="<?= site_url('Welcome/AlimentoSecoEspecialPerro') ?>">Alimento Seco Especial</a>
+                        <li><a href="<?= site_url('Welcome/Bolsas_Dispensadores_Perros') ?>">Bolsas de Heces y
+                                Dispensadores</a>
                         </li>
-                        <li><a href="<?= site_url('Welcome/Snacks_Premios_Perro') ?>"> Snacks y Premios</a></li>
+                        <li><a href="<?= site_url('Welcome/Cuidado_uñas_Perros') ?>">Cuidado de uñas</a></li>
+                        <li><a href="<?= site_url('Welcome/Cuidado_Dental_Perros') ?>">Cuidado Dental</a></li>
+                        <li><a href="<?= site_url('Welcome/Limpieza_Perros') ?>">Limpieza de Hogar</a>
+                        </li>
+                        <li><a href="<?= site_url('Welcome/Peines_Cepillos_Perros') ?>">Peines Cepillos y Cortadoras</a>
+                        </li>
+                        <li><a href="<?= site_url('Welcome/Shampoo_Perros') ?>">Shampoo y Aseo</a>
+                        </li>
                     </ul>
                 </div>
             </div>

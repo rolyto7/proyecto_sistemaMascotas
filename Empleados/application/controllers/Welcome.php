@@ -121,11 +121,65 @@ class Welcome extends CI_Controller
 		$data['productos'] = $this->Productos_model->obtener_accesorios_gatos();
 		$this->check_session_and_load_view('Gatos/Accesorios', $data);
 	}
+	public function Casas_Camas_Gatos()
+	{
+		$this->load->model('Accesorios');
+		$data['productos'] = $this->Accesorios->obtener_camas_gatos();
+		$this->check_session_and_load_view('Gatos/Camas', $data);
+	}
+	public function Torres_Rascadores_Gatos()
+	{
+		$this->load->model('Accesorios');
+		$data['productos'] = $this->Accesorios->obtener_Torres_Rascadores_Gatos();
+		$this->check_session_and_load_view('Gatos/Torres_Rascadores', $data);
+	}
+	public function Transportadores_Jaulas_Gatos()
+	{
+		$this->load->model('Accesorios');
+		$data['productos'] = $this->Accesorios->Transportadores_Jaulas_Gatos();
+		$this->check_session_and_load_view('Gatos/Transportadores_Jaulas', $data);
+	}
+	public function Platos_Dispensadores_Gatos()
+	{
+		$this->load->model('Accesorios');
+		$data['productos'] = $this->Accesorios->Platos_Dispensadores_Gatos();
+		$this->check_session_and_load_view('Gatos/Platos_Dispensadores', $data);
+	}
+	public function Collares_Percheras_Gatos()
+	{
+		$this->load->model('Accesorios');
+		$data['productos'] = $this->Accesorios->Collares_Percheras_Gatos();
+		$this->check_session_and_load_view('Gatos/Collares_Percheras', $data);
+	}
 	public function AlimentoGatos()
 	{
 		$this->load->model('Productos_model');
 		$data['productos'] = $this->Productos_model->obtener_alimento_gatos();
 		$this->check_session_and_load_view('Gatos/Alimento', $data);
+	}
+	public function AlimentoHumedoGatos()
+	{
+		$this->load->model('Productos_model');
+		$data['productos'] = $this->Productos_model->obtener_alimento_humedo_gatos();
+		$this->check_session_and_load_view('Gatos/Alimento_humedo', $data);
+	}
+	public function AlimentoSecoGatos()
+	{
+		$this->load->model('Productos_model');
+		$data['productos'] = $this->Productos_model->obtener_alimento_seco_gatos();
+		$this->check_session_and_load_view('Gatos/Alimento_seco', $data);
+	}
+	public function AlimentoSecoEspecialGato()
+	{
+		$this->load->model('Alimentos');
+		$data['productos'] = $this->Alimentos->obtener_alimento_seco_especial();
+		$this->check_session_and_load_view('Gatos/AlimentoSecoEspecial', $data);
+	}
+	public function Snacks_Premios_Gato()
+	{
+		$this->load->model('Alimentos');
+		$data['productos'] = $this->Alimentos->obtener_Snacks_Premios();
+		$this->check_session_and_load_view('Gatos/Snacks_Premios', $data);
 	}
 	public function JugueteGatos()
 	{
@@ -133,13 +187,54 @@ class Welcome extends CI_Controller
 		$data['productos'] = $this->Productos_model->obtener_juguetes_gatos();
 		$this->check_session_and_load_view('Gatos/Juguetes', $data);
 	}
+	public function Catnip_Gatos()
+	{
+		$this->load->model('Juguetes');
+		$data['productos'] = $this->Juguetes->Catnip_Gatos();
+		$this->check_session_and_load_view('Gatos/Catnip_Gatos', $data);
+	}
+	public function Juguetes_Gatos()
+	{
+		$this->load->model('Juguetes');
+		$data['productos'] = $this->Juguetes->Juguetes_Gatos();
+		$this->check_session_and_load_view('Gatos/Juguete', $data);
+	}
 	public function HigieneGatos()
 	{
 		$this->load->model('Productos_model');
 		$data['productos'] = $this->Productos_model->obtener_higiene_gatos();
 		$this->check_session_and_load_view('Gatos/Higiene', $data);
 	}
-
+	public function Arenas_Sanitarias_Gatos()
+	{
+		$this->load->model('Higiene');
+		$data['productos'] = $this->Higiene->Arenas_Sanitarias_gatos();
+		$this->check_session_and_load_view('Gatos/Arenas_Sanitarias', $data);
+	}
+	public function Areneros_Palas_Gatos()
+	{
+		$this->load->model('Higiene');
+		$data['productos'] = $this->Higiene->Areneros_Palas_Gatos();
+		$this->check_session_and_load_view('Gatos/Areneros_Palas', $data);
+	}
+	public function Limpieza_Hogar_Gatos()
+	{
+		$this->load->model('Higiene');
+		$data['productos'] = $this->Higiene->Limpieza_Hogar_Gatos();
+		$this->check_session_and_load_view('Gatos/Limpieza_Hogar', $data);
+	}
+	public function Shampoo_Aseo_Gatos()
+	{
+		$this->load->model('Higiene');
+		$data['productos'] = $this->Higiene->Shampoo_Aseo_Gatos();
+		$this->check_session_and_load_view('Gatos/Shampoo_Aseo', $data);
+	}
+	public function Peines_Cepillos_Gatos()
+	{
+		$this->load->model('Higiene');
+		$data['productos'] = $this->Higiene->Peines_Cepillos_Gatos();
+		$this->check_session_and_load_view('Gatos/Peines_Cepillos', $data);
+	}
 
 	// Funciones para Perros
 	public function TiendaPerros()
@@ -166,11 +261,60 @@ class Welcome extends CI_Controller
 		$data['productos'] = $this->Productos_model->obtener_productos_perros_humedo();
 		$this->check_session_and_load_view('Perros/Alimento_Seco', $data);
 	}
+	public function AlimentoSecoEspecialPerro()
+	{
+		$this->load->model('Alimentos');
+		$data['productos'] = $this->Alimentos->AlimentoSecoEspecialPerro();
+		$this->check_session_and_load_view('Perros/AlimentoSecoEspecial', $data);
+	}
+	public function Snacks_Premios_Perro()
+	{
+		$this->load->model('Alimentos');
+		$data['productos'] = $this->Alimentos->obtener_Snacks_Premios_Perros();
+		$this->check_session_and_load_view('Perros/Snacks_Premios', $data);
+	}
 	public function AccesoriosPerros()
 	{
 		$this->load->model('Productos_model');
 		$data['productos'] = $this->Productos_model->obtener_accesorios_perros();
 		$this->check_session_and_load_view('Perros/Accesorios', $data);
+	}
+	public function Limpieza_Perros()
+	{
+		$this->load->model('Higiene');
+		$data['productos'] = $this->Higiene->Limpieza_Perros();
+		$this->check_session_and_load_view('Perros/Limpieza', $data);
+	}
+	public function Casas_Camas_Perros()
+	{
+		$this->load->model('Accesorios');
+		$data['productos'] = $this->Accesorios->Casas_Camas_Perros();
+		$this->check_session_and_load_view('Perros/Casas_Camas', $data);
+	}
+	public function Collares_Correas_Perros()
+	{
+		$this->load->model('Accesorios');
+		$data['productos'] = $this->Accesorios->Collares_Correas_Perros();
+		$this->check_session_and_load_view('Perros/Collares_Correas', $data);
+	}
+
+	public function Platos_Dispensadores_Perros()
+	{
+		$this->load->model('Accesorios');
+		$data['productos'] = $this->Accesorios->Platos_Dispensadores_Perros();
+		$this->check_session_and_load_view('Perros/Platos_Dispensadores', $data);
+	}
+	public function Ropa_Perros()
+	{
+		$this->load->model('Accesorios');
+		$data['productos'] = $this->Accesorios->Ropa_Perros();
+		$this->check_session_and_load_view('Perros/Ropa', $data);
+	}
+	public function Transportadores_Jaulas_Perros()
+	{
+		$this->load->model('Accesorios');
+		$data['productos'] = $this->Accesorios->Transportadores_Jaulas_Perros();
+		$this->check_session_and_load_view('Perros/Transportadores_Jaulas', $data);
 	}
 	public function JuguetesPerros()
 	{
@@ -178,11 +322,60 @@ class Welcome extends CI_Controller
 		$data['productos'] = $this->Productos_model->obtener_juguetes_perros();
 		$this->check_session_and_load_view('Perros/Juguetes', $data);
 	}
+	public function Jueguetes_Goma_Perros()
+	{
+		$this->load->model('Juguetes');
+		$data['productos'] = $this->Juguetes->Jueguetes_Goma_Perros();
+		$this->check_session_and_load_view('Perros/Jueguetes_Goma', $data);
+	}
+	public function Pelotas_Perros()
+	{
+		$this->load->model('Juguetes');
+		$data['productos'] = $this->Juguetes->Pelotas_Perros();
+		$this->check_session_and_load_view('Perros/Pelotas', $data);
+	}
+	public function Peluches_Perros()
+	{
+		$this->load->model('Juguetes');
+		$data['productos'] = $this->Juguetes->Peluches_Perros();
+		$this->check_session_and_load_view('Perros/Peluches', $data);
+	}
 	public function HigienePerros()
 	{
 		$this->load->model('Productos_model');
 		$data['productos'] = $this->Productos_model->obtener_higiene_perros();
 		$this->check_session_and_load_view('Perros/Higiene', $data);
+	}
+	public function Bolsas_Dispensadores_Perros()
+	{
+		$this->load->model('Higiene');
+		$data['productos'] = $this->Higiene->Bolsas_Dispensadores_Perros();
+		$this->check_session_and_load_view('Perros/Bolsas_Dispensadores', $data);
+	}
+
+	public function Cuidado_uñas_Perros()
+	{
+		$this->load->model('Higiene');
+		$data['productos'] = $this->Higiene->Cuidado_uñas_Perros();
+		$this->check_session_and_load_view('Perros/Cuidado_uñas', $data);
+	}
+	public function Cuidado_Dental_Perros()
+	{
+		$this->load->model('Higiene');
+		$data['productos'] = $this->Higiene->Cuidado_Dental_Perros();
+		$this->check_session_and_load_view('Perros/Cuidado_Dental', $data);
+	}
+	public function Peines_Cepillos_Perros()
+	{
+		$this->load->model('Higiene');
+		$data['productos'] = $this->Higiene->Peines_Cepillos_Perros();
+		$this->check_session_and_load_view('Perros/Peines_Cepillos', $data);
+	}
+	public function Shampoo_Perros()
+	{
+		$this->load->model('Higiene');
+		$data['productos'] = $this->Higiene->Shampoo_Perros();
+		$this->check_session_and_load_view('Perros/Shampoo', $data);
 	}
 	public function productos()
 	{
@@ -671,13 +864,13 @@ class Welcome extends CI_Controller
 		// Ya no se actualizará la cantidad de stock por cada producto
 		// Puedes eliminar el bloque que descuenta el stock:
 		/*
-								foreach ($detalles_pedido as $detalle) {
-									$producto_id = $detalle['producto_id'];
-									$cantidad = $detalle['cantidad'];
-									// Descontar la cantidad del stock
-									$this->Productos_model->descontar_stock($producto_id, $cantidad);
-								}
-								*/
+																								  foreach ($detalles_pedido as $detalle) {
+																									  $producto_id = $detalle['producto_id'];
+																									  $cantidad = $detalle['cantidad'];
+																									  // Descontar la cantidad del stock
+																									  $this->Productos_model->descontar_stock($producto_id, $cantidad);
+																								  }
+																								  */
 
 		// Insertar la venta
 		$usuario_id = $this->session->userdata('usuario_id');

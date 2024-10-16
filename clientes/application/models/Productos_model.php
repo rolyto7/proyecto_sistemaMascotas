@@ -67,6 +67,20 @@ class Productos_model extends CI_Model
         $query = $this->db->get('productos');
         return $query->result();
     }
+    public function obtener_alimento_humedo_gatos()
+    {
+        $this->db->where('mascota', 'gato');
+        $this->db->where('tipo', 'Alimento Humedo');
+        $query = $this->db->get('productos');
+        return $query->result();
+    }
+    public function obtener_alimento_seco_gatos()
+    {
+        $this->db->where('mascota', 'gato');
+        $this->db->where('tipo', 'Alimento Seco');
+        $query = $this->db->get('productos');
+        return $query->result();
+    }
     public function obtener_juguetes_gatos()
     {
         $this->db->where('mascota', 'gato');
@@ -87,8 +101,6 @@ class Productos_model extends CI_Model
         $query = $this->db->get('productos');
         return $query->result();
     }
-
-    // Funciones para obtener Productos de Perros 
     public function obtener_productos_perros()
     {
         $this->db->where('mascota', 'perro');

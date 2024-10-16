@@ -7,25 +7,13 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
-
-    <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
-
-    <!-- Google Web Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&family=Nunito:wght@600;700;800&display=swap"
         rel="stylesheet">
-
-    <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-
-    <!-- Flaticon Font -->
     <link href="lib/flaticon/font/flaticon.css" rel="stylesheet">
-
-    <!-- Libraries Stylesheet -->
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
     <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
-
-    <!-- Customized Bootstrap Stylesheet -->
     <link href="<?php echo base_url(); ?>assets/css/style1.css" rel="stylesheet">
     <style>
         .custom-select-reportitos {
@@ -53,7 +41,6 @@
 </head>
 
 <body>
-    <!-- Topbar Start -->
     <div class="container-fluid">
         <div class="row py-3 px-lg-5">
             <div class="col-lg-4">
@@ -96,7 +83,6 @@
     </div>
 
     <div class="container pt-5">
-        <!-- Add Product Form -->
         <div id="addProductForm" class="mt-5">
             <h4 class="text-secondary mb-3">Agregar Nuevo Producto</h4>
             <form action="<?php echo site_url('Welcome/agregarProducto'); ?>" method="post"
@@ -120,10 +106,10 @@
                 <div class="form-group">
                     <label for="categoria">Categoría</label>
                     <select class="form-control" id="categoria" name="categoria">
-                        <option value="Accesorios">Accesorios</option>
                         <option value="Alimento">Alimentos</option>
+                        <option value="Accesorios">Accesorios</option>
+                        <option value="Higiene">Higiene</option>
                         <option value="Juguetes">Juguetes</option>
-                        <option value="Estetica E Higiene">Estetica E Higiene</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -134,17 +120,8 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="tipo_alimento">Tipo</label>
+                    <label for="tipo">Tipo</label>
                     <select class="form-control" id="tipo" name="tipo">
-                        <option value="Alimento Seco">Alimento Seco</option>
-                        <option value="Alimento Humedo">Alimento Humedo</option>
-                        <option value="Mascador">Mascador</option>
-                        <option value="Higiene Dental">Higiene Dental</option>
-                        <option value="Torres y Rascadores">Torres y Rascadores</option>
-                        <option value="Juguete">Juguete</option>
-                        <option value="Platos y Dispensadores">Platos y Dispensadores</option>
-                        <option value="Ropa">Ropa</option>
-                        <option value="Transportes y Jaulas">Transportes y Jaulas</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -156,10 +133,7 @@
         </div>
     </div>
 
-    <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
-
-    <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
     <script src="lib/easing/easing.min.js"></script>
@@ -168,12 +142,52 @@
     <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
     <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
-    <!-- Contact Javascript File -->
+
     <script src="mail/jqBootstrapValidation.min.js"></script>
     <script src="mail/contact.js"></script>
 
-    <!-- Template Javascript -->
+
     <script src="js/main.js"></script>
+    <script>
+
+        const opcionesGato = {
+            Alimento: ['Alimento Seco Especial', 'Alimento Seco', 'Snacks y Premios'],
+            Accesorios: ['Casas Camas y Frazadas', 'Torres y Rascadores', 'Platos y Dispensadores', 'Transportadores y Jaulas', 'Collares Correas y Pecheras'],
+            Higiene: ['Arenas Sanitarias', 'Areneros y Palas', 'Limpieza de Hogar', 'Shampoo y Aseo', 'Peines Cepillos y Cortadoras'],
+            Juguetes: ['Catnip Hierba Gatera', 'Juguetes Gato']
+        };
+
+        const opcionesPerro = {
+            Alimento: ['Alimento Seco Especial', 'Alimento Seco', 'Snacks y Premios'],
+            Accesorios: ['Casas Camas y Frazadas', 'Limpieza de Hogar', 'Collares Correas y Pecheras', 'Platos y Dispensadores', 'Ropa', 'Transportadores y Jaulas'],
+            Juguetes: ['Juguetes Goma y Cuerda', 'Pelotas y Otros', 'Peluches'],
+            Higiene: ['Bolsas de Heces y Dispensadores', 'Cuidado de Uñas', 'Cuidado Dental', 'Peines Cepillos y Cortadoras', 'Shampoo y Aseo']
+        };
+
+        function actualizarTipos() {
+            var mascota = document.getElementById('mascota').value;
+            var categoria = document.getElementById('categoria').value;
+            var tipoSelect = document.getElementById('tipo');
+
+            tipoSelect.innerHTML = '';
+
+            var opciones = (mascota === 'gato') ? opcionesGato[categoria] : opcionesPerro[categoria];
+
+            if (opciones) {
+                opciones.forEach(function (opcion) {
+                    var optionElement = document.createElement('option');
+                    optionElement.value = opcion;
+                    optionElement.textContent = opcion;
+                    tipoSelect.appendChild(optionElement);
+                });
+            }
+        }
+
+        document.getElementById('mascota').addEventListener('change', actualizarTipos);
+        document.getElementById('categoria').addEventListener('change', actualizarTipos);
+
+        window.onload = actualizarTipos;
+    </script>
 </body>
 
 </html>

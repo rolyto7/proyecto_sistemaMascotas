@@ -12,7 +12,6 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
     <style>
         #body {
             display: flex;
@@ -43,7 +42,7 @@
         .products {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 15px;
             justify-content: space-between;
             margin-top: 50px;
         }
@@ -54,18 +53,17 @@
             overflow: hidden;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 200px;
-            min-height: 300px;
+            max-width: 250px;
+            min-height: 350px;
             display: flex;
             flex-direction: column;
         }
 
         .card-img-top {
             width: 100%;
-            height: 200px;
+            height: 250px;
             object-fit: contain;
             background-color: #f0f0f0;
-            ;
         }
 
         .card-body {
@@ -116,75 +114,38 @@
             width: 30px;
             height: 25px;
         }
-
-        ul.navigation {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            justify-content: flex-start;
-        }
-
-        ul.navigation li {
-            margin: 0;
-            padding: 0;
-        }
-
-        ul.navigation li a {
-            text-decoration: none;
-            text-align: center;
-            color: #333;
-            padding: 0px;
-            display: inline-block;
-        }
-
-        ul.navigation li a:hover {
-            background-color: #f0f0f0;
-        }
-
-        .discount {
-            color: red;
-            font-weight: bold;
-        }
-
-        .original-price {
-            text-decoration: line-through;
-            color: #888;
-        }
     </style>
 </head>
 
 <body>
     <div id="header">
-        <a href="<?= site_url('Welcome/index') ?>" id="logo"><img src="<?= base_url() ?>assets/images/logo.gif"
-                width="310" height="114" alt=""></a>
+        <a href="<?= site_url('Welcome/empleado') ?>" id="logo"><img src="<?= base_url() ?>assets/images/logo.gif"
+                alt="Logo"></a>
         <ul class="navigation">
-            <li class="active"><a href="<?= site_url('Welcome/productos') ?>">Tienda</a></li>
-            <li><a href="<?= site_url('Welcome/carrito') ?>">Carrito <i class="fas fa-shopping-cart"></i></a></li>
-            <li><a href="<?= site_url('Welcome/contacto') ?>">Acerca de</a></li>
-            <li><a href="<?= site_url('Welcome/contacto') ?>">Contacto</a></li>
+            <li class="active"><a href="<?= site_url('Welcome/productos') ?>">Productos</a></li>
+            <li><a href="<?= site_url('Welcome/ver_pedidos') ?>">Pedidos</a></li>
+            <li><a href="<?= site_url('Welcome/carrito') ?>">Carrito</a></li>
+            <?php if (isset($nombre)): ?>
+                <li class="user-info">
+                    <span class="user-name">Empleado <?= $nombre; ?></span>
+                    <img src="<?= base_url() ?>assets/images/empleado.png" alt="User Icon">
+                </li>
+            <?php endif; ?>
+            <li>
+                <a href="<?php echo site_url('Welcome/cerrarsesion'); ?>" title="Cerrar Sesión" class="btn-exit-system">
+                    <img src="<?= base_url() ?>assets/images/apagar.png" alt="Cerrar sesión" class="logout-img">
+                </a>
+            </li>
         </ul>
     </div>
-
-    <div class="banner" style="background-image: url('<?= base_url() ?>assets/images/fondoperros.png');"></div>
+    <a href="<?= site_url('Welcome/TiendaPerros') ?>" class="banner-link" title="Volver a la Tienda de Perros">
+        <div class="banner" style="background-image: url('<?= base_url() ?>assets/images/fondoperros.png');"></div>
+    </a>
     <div id="body">
         <div class="container">
             <div class="products">
                 <?php if (!empty($productos)): ?>
                     <?php foreach ($productos as $row): ?>
-                        <?php
-                        // Calcula el precio con descuento basado en el valor del atributo oferta
-                        $precio = $row->precio;
-                        $descuento = 0;
-                        if ($row->oferta == 1) {
-                            $descuento = 0.10; // 10%
-                        } elseif ($row->oferta == 2) {
-                            $descuento = 0.15; // 15%
-                        } elseif ($row->oferta == 3) {
-                            $descuento = 0.20; // 20%
-                        }
-                        $precioConDescuento = $precio - ($precio * $descuento);
-                        ?>
                         <div class="card">
                             <a href="<?= site_url('Welcome/detallesperro/' . $row->producto_id); ?>"
                                 title="Ver detalles de <?php echo $row->nombre; ?>">
@@ -206,7 +167,6 @@
                                         <span class="discount">Bs. <?php echo number_format($precioConDescuento, 2); ?>
                                             (<?php echo $descuento * 100; ?>% OFF)</span>
                                     </p>
-                                    <p class="card-text">Stock: <?php echo $row->stock; ?> unidades</p>
                                 <?php else: ?>
                                     <p class="card-text">Bs. <?php echo number_format($row->precio, 2); ?></p>
                                     <p class="card-text">Stock: <?php echo $row->stock; ?> unidades</p>
@@ -221,7 +181,7 @@
                         </div>
                     <?php endforeach; ?>
                 <?php else: ?>
-                    <p>No se encontraron productos.</p>
+                    <p>No se encontraron productos para perros.</p>
                 <?php endif; ?>
             </div>
         </div>
@@ -230,12 +190,16 @@
             <div class="section">
                 <div class="aside">
                     <ul>
-                        <li><a href="<?= site_url('Welcome/AlimentoSecoPerros') ?>">Alimento Húmedo</a></li>
-                        <li><a href="<?= site_url('Welcome/AlimentoHumedoPerros') ?>">Alimento Seco</a></li>
-                        <li><a href="<?= site_url('Welcome/AlimentoSecoEspecialPerro') ?>">Alimento Seco Especial</a>
+                        <li><a href="<?= site_url('Welcome/Bolsas_Dispensadores_Perros') ?>">Bolsas de Heces y
+                                Dispensadores</a>
                         </li>
-                        <li><a href="<?= site_url('Welcome/Snacks_Premios_Perro') ?>"> Snacks y Premios</a></li>
-                    </ul>
+                        <li><a href="<?= site_url('Welcome/Cuidado_uñas_Perros') ?>">Cuidado de uñas</a></li>
+                        <li><a href="<?= site_url('Welcome/Cuidado_Dental_Perros') ?>">Cuidado Dental</a></li>
+                        <li><a href="<?= site_url('Welcome/Limpieza_Perros') ?>">Limpieza de Hogar</a>
+                        </li>
+                        <li><a href="<?= site_url('Welcome/Peines_Cepillos_Perros') ?>">Peines Cepillos y Cortadoras</a>
+                        </li>
+                        <li><a href="<?= site_url('Welcome/Shampoo_Perros') ?>">Shampoo y Aseo</a>
                 </div>
             </div>
         </div>
@@ -276,6 +240,7 @@
             });
         }
     </script>
+
 </body>
 
 </html>
